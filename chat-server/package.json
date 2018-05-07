@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/axelmaddonni/react-chat/issues"
   },
-  "homepage": "https://github.com/axelmaddonni/react-chat#readme"
+  "homepage": "https://github.com/axelmaddonni/react-chat#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
