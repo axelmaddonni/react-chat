@@ -5,7 +5,7 @@ const groupChats = (state = new Map(), action) => {
             return state.set(action.groupId, []);
         case 'ADD_GROUP_MESSAGE':
             return state.set(action.groupId, state.get(action.groupId).push(action.message));
-        case 'DELETE_GROUP_MESSAGE':
+        case 'DELETE_GROUP_MESSAGES':
             return state.set(action.groupId, []);
         case 'EXIT_GROUP':
             return state.delete(action.groupId);

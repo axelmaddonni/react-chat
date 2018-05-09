@@ -31,6 +31,11 @@ export const deleteGroupChat = (groupId) => ({
     groupId
 })
 
+export const deleteMemberGroup = (groupId, nick) => ({
+    type: types.DELETE_MEMBER_GROUP,
+    nick
+})
+
 export const createGroup = (groupId, groupName, members) => ({
     type: types.CREATE_GROUP,
     groupId,

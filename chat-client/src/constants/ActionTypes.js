@@ -11,3 +11,4 @@ export const LOG_OUT = 'LOG_OUT';
 export const CREATE_GROUP = 'CREATE_GROUP';
 export const UPDATE_ACTIVE_CHAT = 'UPDATE_ACTIVE_CHAT';
 export const OPEN_GROUP_CHAT = 'OPEN_GROUP_CHAT';
+export const DELETE_MEMBER_GROUP = 'DELETE_MEMBER_GROUP';
