@@ -1,8 +1,8 @@
 import * as types from '../../constants/ActionTypes'
 
-export const loginOk = (userList) => ({
+export const loginOk = (list) => ({
     type: types.LOGIN_OK,
-    userList
+    list
 });
 
 export const sendMessage = (message) => ({
@@ -31,9 +31,11 @@ export const deleteGroupChat = (groupId) => ({
     groupId
 })
 
-export const createGroup = (groupId) => ({
+export const createGroup = (groupId, groupName, members) => ({
     type: types.CREATE_GROUP,
-    groupId
+    groupId,
+    groupName,
+    members
 })
 
 export const addUser = (nick, age, city) => ({
@@ -46,15 +48,6 @@ export const updateView = (view) => ({
     type: types.UPDATE_VIEW,
     view
 });
-
-export const messageReceived = (message, author) => ({
-    type: types.MESSAGE_RECEIVED,
-    id: nextMessageId++,
-    message,
-    author
+export const logOut = () => ({
+    type: types.LOG_OUT
 });
-
-export const populateUsersList = users => ({
-    type: types.USERS_LIST,
-    users
-})
