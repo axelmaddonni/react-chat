@@ -9,4 +9,5 @@ export const EXIT_GROUP = 'EXIT_GROUP';
 export const LOGIN_OK = 'LOGIN_OK';
 export const LOG_OUT = 'LOG_OUT';
 export const CREATE_GROUP = 'CREATE_GROUP';
-export const UPDATE_VIEW = 'UPDATE_VIEW';
+export const UPDATE_ACTIVE_CHAT = 'UPDATE_ACTIVE_CHAT';
+export const OPEN_GROUP_CHAT = 'OPEN_GROUP_CHAT';

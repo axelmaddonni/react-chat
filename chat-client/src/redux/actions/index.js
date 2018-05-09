@@ -48,3 +48,13 @@ export const addUser = (nick, age, city) => ({
 export const logOut = () => ({
     type: types.LOG_OUT
 });
+
+export const updateActiveChat = (nick) => ({
+    type: types.UPDATE_ACTIVE_CHAT,
+    nick
+});
+
+export const openGroupChat = (groupId) => ({
+    type: types.OPEN_GROUP_CHAT,
+    groupId
+});
