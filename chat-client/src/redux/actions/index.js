@@ -19,29 +19,29 @@ export const sendGroupMessage = (groupId, message) => ({
     type: types.ADD_GROUP_MESSAGE,
     groupId,
     message
-})
+});
 
 export const deleteChat = (nick) => ({
     type: types.DELETE_MESSAGE,
     nick
-})
+});
 
 export const deleteGroupChat = (groupId) => ({
     type: types.DELETE_GROUP_MESSAGES,
     groupId
-})
+});
 
 export const deleteMemberGroup = (groupId, nick) => ({
     type: types.DELETE_MEMBER_GROUP,
     nick
-})
+});
 
 export const createGroup = (groupId, groupName, members) => ({
     type: types.CREATE_GROUP,
     groupId,
     groupName,
     members
-})
+});
 
 export const addUser = (nick, age, city) => ({
     type: types.ADD_USER,
