@@ -44,10 +44,7 @@ export const addUser = (nick, age, city) => ({
     age,
     city
 });
-export const updateView = (view) => ({
-    type: types.UPDATE_VIEW,
-    view
-});
+
 export const logOut = () => ({
     type: types.LOG_OUT
 });

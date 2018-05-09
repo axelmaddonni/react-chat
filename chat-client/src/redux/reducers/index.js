@@ -3,7 +3,6 @@ import chats from './chats'
 import groupChats from './groupChats'
 import userList from './userList'
 import activeChat from './activeChat'
-import activeView from './activeView'
 import groupList from './groupList'
 
 const reducers = combineReducers({
@@ -11,7 +10,6 @@ const reducers = combineReducers({
     groupChats,
     userList,
     activeChat,
-    activeView,
     groupList
 })
 
