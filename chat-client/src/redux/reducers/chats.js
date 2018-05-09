@@ -1,24 +1,15 @@
-const chats = (state = {}, action) => {
+const { Map } = require('immutable');
+const chats = (state = new Map(), action) => {
     switch (action.type) {
-        case 'ADD_MESSAGE':
-            return state.push([
-                {
-                    message: action.message,
-                    author: action.author,
-                    id: action.id
-                }
-            ])
-        case 'MESSAGE_RECEIVED':
-            return state.concat([
-                {
-                    message: action.message,
-                    author: action.author,
-                    id: action.id
-                }
-            ])
+        case 'RECEIVE_MESSAGE':
+            return state.set([action.message.author], {message: action.message});
+        case 'SEND_MESSAGE':
+            return state.set([action.message.receiver], {message: action.message});
+        case 'DELETE_CHAT':
+            return state.set([action.nick], new Map());
         default:
             return state
     }
-}
+};
 
 export default chats

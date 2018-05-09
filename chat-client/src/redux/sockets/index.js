@@ -7,7 +7,9 @@ const setupSocket = (dispatch, username) => {
     socket.onopen = () => {
         socket.send(JSON.stringify({
             type: types.ADD_USER,
-            name: username
+            name: username,
+            age: age,
+            city: city
         }))
     }
     socket.onmessage = (event) => {
