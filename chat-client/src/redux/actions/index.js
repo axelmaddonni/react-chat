@@ -15,7 +15,7 @@ export const receiveMessage = (message) => ({
     message
 });
 
-export const sendGroupMessage = (groupId, message) => ({
+export const addGroupMessage = (groupId, message) => ({
     type: types.ADD_GROUP_MESSAGE,
     groupId,
     message
@@ -31,25 +31,6 @@ export const deleteGroupChat = (groupId) => ({
     groupId
 });
 
-export const deleteMemberGroup = (groupId, nick) => ({
-    type: types.DELETE_MEMBER_GROUP,
-    nick
-});
-
-export const createGroup = (groupId, groupName, members) => ({
-    type: types.CREATE_GROUP,
-    groupId,
-    groupName,
-    members
-});
-
-export const addUser = (nick, age, city) => ({
-    type: types.ADD_USER,
-    nick,
-    age,
-    city
-});
-
 export const logOut = () => ({
     type: types.LOG_OUT
 });
@@ -63,3 +44,30 @@ export const openGroupChat = (groupId) => ({
     type: types.OPEN_GROUP_CHAT,
     groupId
 });
+
+
+export const addUser = (nick, age, city) => ({
+    type: types.ADD_USER,
+    nick,
+    age,
+    city
+});
+
+export const deleteUser = (nick) => ({
+    type: types.DELETE_USER,
+    nick
+});
+
+export const createGroup = (groupId, groupName, members) => ({
+    type: types.CREATE_GROUP,
+    groupId,
+    groupName,
+    members
+});
+
+export const deleteMemberGroup = (groupId, nick) => ({
+    type: types.DELETE_MEMBER_GROUP,
+    groupId,
+    nick
+});
+

@@ -1,30 +1,29 @@
 import * as types from '../../constants/ActionTypes'
-import { messageReceived, populateUsersList } from '../actions'
+import io from "socket.io-client"
 
-const setupSocket = (dispatch, username) => {
-    const socket = new WebSocket('ws://localhost:8989')
+import {
+    addGroupMessage,
+    addUser,
+    createGroup,
+    deleteMemberGroup, deleteUser,
+    loginOk,
+    receiveMessage,
+} from "../actions";
 
-    socket.onopen = () => {
-        socket.send(JSON.stringify({
-            type: types.ADD_USER,
-            name: username,
-            age: age,
-            city: city
-        }))
-    }
-    socket.onmessage = (event) => {
-        const data = JSON.parse(event.data)
-        switch (data.type) {
-            case types.ADD_MESSAGE:
-                dispatch(messageReceived(data.message, data.author))
-                break
-            case types.USERS_LIST:
-                dispatch(populateUsersList(data.users))
-                break
-            default:
-                break
-        }
-    }
+const setupSocket = (dispatch, user) => {
+    const socket = io.connect("http://localhost:3000");
+
+    socket.on("connect", function(){
+        // TODO: depende del login
+    });
+
+    socket.on(types.LOGIN_OK, (userList) => dispatch(loginOk(userList)));
+    socket.on(types.ADD_USER, (nick, age, city) => dispatch(addUser(nick, age, city)));
+    socket.on(types.DELETE_USER, (nick) => dispatch(deleteUser(nick)));
+    socket.on(types.CREATE_GROUP, (groupId, name, members) => dispatch(createGroup(groupId, name, members)));
+    socket.on(types.DELETE_MEMBER_GROUP, (groupId, nick) => dispatch(deleteMemberGroup(groupId, nick)));
+    socket.on(types.RECEIVE_MESSAGE, (message) => dispatch(receiveMessage(message)));
+    socket.on(types.ADD_GROUP_MESSAGE, (groupId, message) => dispatch(addGroupMessage(groupId, message)));
 
     return socket
 }
