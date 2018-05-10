@@ -12,5 +12,12 @@ export const OPEN_GROUP_CHAT = 'OPEN_GROUP_CHAT';
 export const DELETE_MEMBER_GROUP = 'DELETE_MEMBER_GROUP';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_OK = 'LOGIN_OK';
+export const POPULATE_USER_LIST = 'POPULATE_USER_LIST';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
-export const LOG_OUT = 'LOG_OUT';
+export const LOGOUT = 'LOGOUT';
+
+export const alertConstants = {
+    SUCCESS: 'ALERT_SUCCESS',
+    ERROR: 'ALERT_ERROR',
+    CLEAR: 'ALERT_CLEAR'
+};

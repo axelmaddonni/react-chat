@@ -1,14 +1,15 @@
 const { Map } = require('immutable');
-const userList = (state = new Map(), action) => {
+const initialState = new Map();
+const userList = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_USER':
             return state.set(action.nick, [action.age, action.city]);
         case 'DELETE_USER':
             return state.delete(action.nick);
-        case 'LOGIN_OK':
+        case 'POPULATE_USER_LIST':
             return action.list;
-        case 'LOG_OUT':
-            return state.clear();
+        case 'LOGOUT':
+            return initialState;
         default:
             return state
     }

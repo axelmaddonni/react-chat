@@ -46,7 +46,8 @@ io.sockets.on('connection', function (socket) {
     // socket.on(CREATE_GROUP, () => TODO);
     // socket.on(EXIT_GROUP, () => TODO);
 
-    socket.on("LOGIN_REQUEST", (user) => {
+    socket.on("LOGIN_REQUEST", (params) => {
+        const user = params.user;
         const username = user.nick;
         console.log("Login Request from " + username);
         console.log(users);
@@ -66,12 +67,13 @@ io.sockets.on('connection', function (socket) {
             userSockets.set(username, socket);
 
             // update the list of users in chat, client-side
-            socket.emit("LOGIN_OK", users);
+            socket.emit("LOGIN_OK", user);
+            socket.emit("POPULATE_USER_LIST", users);
             socket.broadcast.emit("ADD_USER", user);
         }
     });
 
-    socket.on("LOG_OUT", () => {
+    socket.on("LOGOUT", () => {
         delete users[socket.username];
         delete userSockets[socket.username];
 

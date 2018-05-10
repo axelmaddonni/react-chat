@@ -1,5 +1,7 @@
 const { Map } = require('immutable');
-const groupList = (state = new Map(), action) => {
+const initialState = new Map();
+
+const groupList = (state = initialState, action) => {
     switch (action.type) {
         case 'CREATE_GROUP':
             return state.set(action.groupId, [action.groupName, action.members]);
@@ -14,8 +16,8 @@ const groupList = (state = new Map(), action) => {
                 }
             });
             return state.set(action.groupId, [state.get(action.groupId)[0], newMembers])
-        case 'LOG_OUT':
-            return state.clear();
+        case 'LOGOUT':
+            return initialState;
         default:
             return state
     }

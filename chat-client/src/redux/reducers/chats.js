@@ -1,5 +1,6 @@
 const { Map } = require('immutable');
-const chats = (state = new Map(), action) => {
+const initialState = new Map();
+const chats = (state = initialState, action) => {
     switch (action.type) {
         case 'RECEIVE_MESSAGE':
             if(state.has(action.message.author)){
@@ -15,8 +16,8 @@ const chats = (state = new Map(), action) => {
             }
         case 'DELETE_CHAT':
             return state.set(action.nick, []);
-        case 'LOG_OUT':
-            return state.clear();
+        case 'LOGOUT':
+            return initialState;
         default:
             return state
     }
