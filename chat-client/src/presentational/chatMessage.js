@@ -5,13 +5,13 @@ class ChatMessage extends React.Component {
     render() {
         return <p>
             <i>{this.props.author}</i>:
-            <p>{this.props.message}</p>
+            <p>{this.props.data}</p>
         </p>
     }
 }
 
 ChatMessage.propTypes = {
-    message: PropTypes.string.isRequired,
+    data: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired
 }
 
