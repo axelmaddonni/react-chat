@@ -18,9 +18,9 @@ const store = createStore(
   applyMiddleware(sagaMiddleware)
 )
 
-const username = "Axel"
+const user = { nick: "axelito", age: 2, city: "Buenos Aires"}
 
-const socket = setupSocket(store.dispatch, username)
+const socket = setupSocket(store.dispatch, user)
 
 sagaMiddleware.run(handleNewMessage, { socket, username })
 
