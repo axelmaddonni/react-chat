@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ChatMessage from './chatMessage'
+const { Map } = require('immutable');
 
 class ChatMessages extends React.Component {
 
@@ -8,10 +9,9 @@ class ChatMessages extends React.Component {
         return <section id="chat-messages">
             <ul>
                 {this.props.chats.map(message => (
-                    //TODO revisar
                     <ChatMessage
-                        key={message.id}
-                        {...message}
+                        data={message.data}
+                        author={message.author}
                     />
                 ))}
             </ul>
@@ -19,13 +19,24 @@ class ChatMessages extends React.Component {
     }
 }
 
-ChatMessages.propTypes = {
-        chats: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        message: PropTypes.string.isRequired,
+
+//No se si está bien poner el tipo de Map (adentro de Map) - Manu
+//Map o un arreglo?? - Manu
+
+/*chat: PropTypes.arrayOf({
+        data: PropTypes.string.isRequired,
         author: PropTypes.string.isRequired,
         receiver: PropTypes.string.isRequired
-    }).isRequired).isRequired
+    }).isRequired)*/
+
+ChatMessages.propTypes = {
+        chats: PropTypes.instanceOf(Map(
+            PropTypes.string.isRequired,
+            PropTypes.shape({
+                data: PropTypes.string.isRequired,
+                author: PropTypes.string.isRequired,
+                receiver: PropTypes.string.isRequired
+            })).isRequired)
 }
 
 export default ChatMessages
