@@ -1,16 +1,12 @@
-var ioreq = require("socket.io-request");
-var io = require("socket.io-client")("http://localhost:3000");
+var socket = require("socket.io-client")("http://localhost:3000");
 
 // var socket = io.connect('http://localhost:3000', { 'forceNew': true });
 
-io.on("connect", function(){
+socket.on("connect", function(){
     console.log("request");
-    ioreq(io).request("toUpper", "hello world") // method, data
-        .then(function(res){
-            console.log(res); // get "HELLO WORLD"
-        })
-        .catch(function(err){
-            console.error(err.stack || err);
-        });
-});
+    const user = { nick: "axel", age: 22, city: "Buenos Aires"};
+    socket.emit("LOGIN_REQUEST", user) // method, data
 
+    socket.on("LOGIN_OK", (res) => console.log(res));
+    socket.on("LOGIN_ERROR", (res) => console.log(res));
+});

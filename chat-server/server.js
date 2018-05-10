@@ -1,7 +1,3 @@
-import {DELETE_USER, LOGIN_ERROR, SEND_MESSAGE} from "../chat-client/src/constants/ActionTypes";
-import {LOGIN_REQUEST} from "../chat-client/src/constants/ActionTypes";
-import {LOG_OUT} from "../chat-client/src/constants/ActionTypes";
-
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -41,8 +37,8 @@ function Group(id, name, members) {
 
 io.sockets.on('connection', function (socket) {
 
-    socket.on(SEND_MESSAGE, (params) => {
-        io.sockets.socket(userSockets[params.message.receiver]).emit(RECEIVE_MESSAGE, params.message);
+    socket.on("SEND_MESSAGE", (params) => {
+        io.sockets.socket(userSockets[params.message.receiver]).emit("RECEIVE_MESSAGE", params.message);
     });
 
     // Group Events
@@ -50,12 +46,14 @@ io.sockets.on('connection', function (socket) {
     // socket.on(CREATE_GROUP, () => TODO);
     // socket.on(EXIT_GROUP, () => TODO);
 
-    socket.on(LOGIN_REQUEST, (user) => {
+    socket.on("LOGIN_REQUEST", (user) => {
         const username = user.nick;
         console.log("Login Request from " + username);
+        console.log(users);
 
-        if (username in users) {
-            socket.emit(LOGIN_ERROR, "Invalid nick");
+        if (users.has(username)) {
+            socket.emit("LOGIN_ERROR", "Invalid nick");
+            console.log("ERROR");
 
         } else {
             // TODO: echo to client they've connected
@@ -68,17 +66,17 @@ io.sockets.on('connection', function (socket) {
             userSockets.set(username, socket);
 
             // update the list of users in chat, client-side
-            socket.emit(LOGIN_OK, users);
-            socket.broadcast.emit(ADD_USER, user);
+            socket.emit("LOGIN_OK", users);
+            socket.broadcast.emit("ADD_USER", user);
         }
     });
 
-    socket.on(LOG_OUT, () => {
+    socket.on("LOG_OUT", () => {
         delete users[socket.username];
         delete userSockets[socket.username];
 
         // update list of users in chat, client-side
-        socket.broadcast.emit(DELETE_USER, socket.username);
+        socket.broadcast.emit("DELETE_USER", socket.username);
 
         // TODO: echo globally that this client has left
         //socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
