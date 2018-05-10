@@ -1,9 +1,11 @@
-// Setup basic express server
+import {DELETE_USER, LOGIN_ERROR, SEND_MESSAGE} from "../chat-client/src/constants/ActionTypes";
+import {LOGIN_REQUEST} from "../chat-client/src/constants/ActionTypes";
+import {LOG_OUT} from "../chat-client/src/constants/ActionTypes";
+
 var express = require('express');
 var app = express();
 var path = require('path');
 var server = require('http').createServer(app);
-// var io = require('../..')(server);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 3000;
 
@@ -14,78 +16,71 @@ server.listen(port, () => {
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Data structures
+var users = new Map(); // maps nick to userInfo
+var groups = new Map(); // maps groupId to groupInfo
+var userSockets = new Map(); // maps nick to socket id
 
-// usernames which are currently connected to the chat
-var usernames = {};
+function Message(author, receiver, data) {
+    this.author = author;
+    this.receiver = receiver;
+    this.data = data;
+}
 
-function check_key(v)
-{
-    var val = '';
+function User(nick, age, city) {
+    this.nick = nick;
+    this.age = age;
+    this.city = city;
+}
 
-    for(var key in usernames)
-    {
-        if(usernames[key] == v)
-            val = key;
-    }
-    return val;
+function Group(id, name, members) {
+    this.id = id;
+    this.name = name;
+    this.members = members;
 }
 
 io.sockets.on('connection', function (socket) {
 
-    // when the client emits 'sendchat', this listens and executes
-    socket.on('sendchat', function (data) {
-        // we tell the client to execute 'updatechat' with 2 parameters
-        io.sockets.emit('updatechat', socket.username, data);
+    socket.on(SEND_MESSAGE, (params) => {
+        io.sockets.socket(userSockets[params.message.receiver]).emit(RECEIVE_MESSAGE, params.message);
     });
 
-    // when the client emits 'adduser', this listens and executes
-    socket.on('adduser', function(username){
-        console.log("RECIBI UN REQUEST DE " + username);
-        // we store the username in the socket session for this client
-        socket.username = username;
-        // add the client's username to the global list
-        usernames[username] = socket.id;
-        // echo to client they've connected
-        socket.emit('updatechat', 'SERVER', 'you have connected');
-        // echo to client their username
-        socket.emit('store_username', username);
-        // echo globally (all clients) that a person has connected
-        socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected: ' + socket.id);
-        // update the list of users in chat, client-side
-        io.sockets.emit('updateusers', usernames);
+    // Group Events
+    // socket.on(ADD_GROUP_MESSAGE, () => TODO);
+    // socket.on(CREATE_GROUP, () => TODO);
+    // socket.on(EXIT_GROUP, () => TODO);
+
+    socket.on(LOGIN_REQUEST, (user) => {
+        const username = user.nick;
+        console.log("Login Request from " + username);
+
+        if (username in users) {
+            socket.emit(LOGIN_ERROR, "Invalid nick");
+
+        } else {
+            // TODO: echo to client they've connected
+            // socket.emit('updatechat', 'SERVER', 'you have connected');
+            // TODO: echo globally (all clients) that a person has connected
+            // socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected: ' + socket.id);
+
+            socket.username = username;
+            users.set(username, [user.age, user.city]);
+            userSockets.set(username, socket);
+
+            // update the list of users in chat, client-side
+            socket.emit(LOGIN_OK, users);
+            socket.broadcast.emit(ADD_USER, user);
+        }
     });
 
-    // when the user disconnects.. perform this
-    socket.on('disconnect', function(){
-        // remove the username from global usernames list
-        delete usernames[socket.username];
+    socket.on(LOG_OUT, () => {
+        delete users[socket.username];
+        delete userSockets[socket.username];
+
         // update list of users in chat, client-side
-        io.sockets.emit('updateusers', usernames);
-        // echo globally that this client has left
-        socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
+        socket.broadcast.emit(DELETE_USER, socket.username);
+
+        // TODO: echo globally that this client has left
+        //socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
     });
-
-    // when the user sends a private msg to a user id, first find the username
-    socket.on('check_user', function(asker, id){
-        //console.log("SEE: "+asker); console.log(id);
-        io.sockets.socket(usernames[asker]).emit('msg_user_found', check_key(id));
-    });
-
-    // when the user sends a private message to a user.. perform this
-    socket.on('msg_user', function(usr, username, msg) {
-        //console.log("From user: "+username);
-        //console.log("To user: "+usr);
-        //console.log(usernames);
-        io.sockets.socket(usernames[usr]).emit('msg_user_handle', username, msg);
-
-        fs.writeFile("chat_data.txt", msg, function(err) {
-            if(err) {
-                console.log(err);
-            } /*else {
-			console.log("The file was saved!");
-			}*/
-        });
-    });
-
-
 });
