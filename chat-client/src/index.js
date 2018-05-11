@@ -18,6 +18,10 @@ const store = createStore(
   applyMiddleware(sagaMiddleware)
 )
 
+store.subscribe(() => {
+    console.log(store.getState());
+});
+
 const socket = setupSocket(store.dispatch)
 
 sagaMiddleware.run(handleNewMessage, socket)

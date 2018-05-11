@@ -12,7 +12,7 @@ export default function authentication(state = initialState, action) {
             };
         case LOGIN_OK:
             console.log("LOGIN_OK");
-            localStorage.setItem('user', JSON.stringify(action.user));
+            sessionStorage.setItem('user', JSON.stringify(action.user));
             return {
                 loggedIn: true,
                 user: action.user
@@ -21,7 +21,7 @@ export default function authentication(state = initialState, action) {
             console.log("LOGIN_ERROR");
             return {};
         case LOGOUT:
-            localStorage.clear();
+            sessionStorage.clear();
             return {};
         default:
             return state

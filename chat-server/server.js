@@ -37,6 +37,8 @@ function Group(id, name, members) {
 
 io.sockets.on('connection', function (socket) {
 
+    console.log("NEW CONNECTION " + socket.id);
+
     socket.on("SEND_MESSAGE", (params) => {
         io.sockets.socket(userSockets[params.message.receiver]).emit("RECEIVE_MESSAGE", params.message);
     });
