@@ -1,6 +1,6 @@
+import React from 'react'
 import { connect } from 'react-redux'
 import { activeChatsAndGroupsButton } from '../activeChatsAndGroupsButton'
-import React from 'react'
 
 class ActiveChatsAndGroups extends React.Component {
 

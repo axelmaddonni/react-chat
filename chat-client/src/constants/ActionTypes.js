@@ -33,7 +33,7 @@ export const messageConstants = {
     RECEIVE_GROUP: 'RECEIVE_GROUP_MESSAGE'
 };
 
-export const activeChatsContants = {
+export const activeChatsConstants = {
     UPDATE_ACTIVE_CHAT: 'UPDATE_ACTIVE_CHAT',
     ADD_ACTIVE_CHAT: 'ADD_ACTIVE_CHAT',
     DELETE_ACTIVE_CHAT: 'DELETE_ACTIVE_CHAT'
