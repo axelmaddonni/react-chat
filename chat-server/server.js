@@ -17,46 +17,36 @@ var users = new Map(); // maps nick to userInfo
 var groups = new Map(); // maps groupId to groupInfo
 var userSockets = new Map(); // maps nick to socket id
 
-function Message(author, receiver, data) {
-    this.author = author;
-    this.receiver = receiver;
-    this.data = data;
-}
-
-function User(nick, age, city) {
-    this.nick = nick;
-    this.age = age;
-    this.city = city;
-}
-
-function Group(id, name, members) {
-    this.id = id;
-    this.name = name;
-    this.members = members;
-}
+// function Message(author, receiver, data) {
+//     this.author = author;
+//     this.receiver = receiver;
+//     this.data = data;
+// }
+//
+// function User(nick, age, city) {
+//     this.nick = nick;
+//     this.age = age;
+//     this.city = city;
+// }
+//
+// function Group(id, name, members) {
+//     this.id = id;
+//     this.name = name;
+//     this.members = members;
+// }
 
 io.sockets.on('connection', function (socket) {
-
-    console.log("NEW CONNECTION " + socket.id);
-
-    socket.on("SEND_MESSAGE", (params) => {
-        io.sockets.socket(userSockets[params.message.receiver]).emit("RECEIVE_MESSAGE", params.message);
-    });
-
-    // Group Events
-    // socket.on(ADD_GROUP_MESSAGE, () => TODO);
-    // socket.on(CREATE_GROUP, () => TODO);
-    // socket.on(EXIT_GROUP, () => TODO);
 
     socket.on("LOGIN_REQUEST", (params) => {
         const user = params.user;
         const username = user.nick;
+
         console.log("Login Request from " + username);
         console.log(users);
 
         if (users.has(username)) {
             socket.emit("LOGIN_ERROR", "Invalid nick");
-            console.log("ERROR");
+            console.log("ERROR: " + username);
 
         } else {
             // TODO: echo to client they've connected
@@ -68,10 +58,13 @@ io.sockets.on('connection', function (socket) {
             users.set(username, [user.age, user.city]);
             userSockets.set(username, socket);
 
-            // update the list of users in chat, client-side
             socket.emit("LOGIN_OK", user);
             socket.emit("POPULATE_USER_LIST", users);
-            socket.broadcast.emit("ADD_USER", user);
+
+            socket.join("all");
+            socket.to("all").emit("ADD_USER", user);
+
+            console.log("JOINED: " + username);
         }
     });
 
@@ -79,10 +72,27 @@ io.sockets.on('connection', function (socket) {
         delete users[socket.username];
         delete userSockets[socket.username];
 
-        // update list of users in chat, client-side
-        socket.broadcast.emit("DELETE_USER", socket.username);
+        socket.to("all").emit("DELETE_USER", socket.username);
+
+        // delete socket from all rooms
+        var roomKeys = Object.keys(socket.rooms);
+        var socketIdIndex = roomKeys.indexOf(socket.id);
+        var rooms = roomKeys.splice( socketIdIndex, 1 );
+        rooms.forEach((room) => socket.leave(room));
 
         // TODO: echo globally that this client has left
         //socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
     });
+
+    // TODO: hacer el send para los 3 tipos de mensajes
+    // socket.on("SEND_MESSAGE", (params) => {
+    //     console.log("SENDING MESSAGE");
+    //     io.sockets.socket(userSockets[params.message.receiver]).emit("RECEIVE_MESSAGE", params.message);
+    // });
+
+    // Group Events
+    // socket.on(ADD_GROUP_MESSAGE, () => TODO);
+    // socket.on(CREATE_GROUP, () => TODO);
+    // socket.on(EXIT_GROUP, () => TODO);
+
 });
