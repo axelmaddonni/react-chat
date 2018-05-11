@@ -1,18 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class ChatMessage extends React.Component {
+class UserInfo extends React.Component {
     render() {
         return <div>
-            <i>{this.props.nick}</i> - <i>{this.props.age}</i> - <i>{this.props.city}</i>
+            <div>{this.props.nick} - {this.props.age} - {this.props.city}</div>
         </div>
     }
 }
 
-ChatMessage.propTypes = {
+UserInfo.propTypes = {
     nick: PropTypes.string.isRequired,
     age: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired
 }
 
-export default ChatMessage
+export default UserInfo

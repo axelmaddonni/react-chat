@@ -5,17 +5,16 @@ import { connect } from 'react-redux';
 class Agenda extends React.Component {
 
     render() {
-        return <section id="chat-messages">
-            <ul>
-                {this.props.userList.map(userInfo => (
-                    <UserInfo
-                        nick={userInfo.nick}
-                        age={userInfo.age}
-                        city={userInfo.city}
-                    />
-                ))}
-            </ul>
-        </section>
+        let keys = new Array();
+        this.props.userList.forEach((value, key) => keys.push(key));
+
+        return <div id="agenda">
+                {keys.map((key) => (<UserInfo
+                    nick={key}
+                    age={this.props.userList.get(key).age}
+                    city={this.props.userList.get(key).city}
+                />))}
+        </div>
     }
 }
 

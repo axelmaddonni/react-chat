@@ -2,32 +2,30 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import {updateActiveChat} from "../redux/actions/activeChat";
-import {chatTypes, publicChatName} from "../constants/ActionTypes"
+import {chatTypes, publicChatName} from "../constants/ActionTypes";
 
 class ActiveChatsAndGroupsButton extends React.Component {
 
     render() {
         return <div>
-            <div onClick={this.props.dispatchUpdateActiveChat(this.props.chatType, this.props.id)}> {getActualChatName(this.props.chatType, this.props.id)}</div>
+            <div onClick={this.props.dispatchUpdateActiveChat(this.props.chatType, this.props.id)}> {getChatName(this.props.chatType, this.props.id)}</div>
         </div>
     }
 }
 
-
-function getActualChatName(type, id) {
+export function getChatName(type, id) {
 
     if ( type === chatTypes.PRIVATE) {
-        return this.props.userList.get(this.props.id);
+        return this.props.userList.get(id);
     } else {
         if (type === chatTypes.GROUP) {
-            return this.props.groupList.get(this.props.id);
+            return this.props.groupList.get(id);
         } else {
             if (type === chatTypes.PUBLIC) {
                 return publicChatName;
             }
         }
     }
-
 }
 
 ActiveChatsAndGroupsButton.propTypes = {
