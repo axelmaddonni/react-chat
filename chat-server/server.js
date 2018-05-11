@@ -17,6 +17,8 @@ var users = new Map(); // maps nick to userInfo
 var groups = new Map(); // maps groupId to groupInfo
 var userSockets = new Map(); // maps nick to socket id
 
+const PUBLIC_ROOM = 'all';
+
 // function Message(author, receiver, data) {
 //     this.author = author;
 //     this.receiver = receiver;
@@ -55,15 +57,13 @@ io.sockets.on('connection', function (socket) {
             // socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected: ' + socket.id);
 
             socket.username = username;
-            users.set(username, [user.age, user.city]);
+            users.set(username, { age: user.age, city: user.city });
             userSockets.set(username, socket);
 
             socket.emit("LOGIN_OK", user);
-            socket.emit("POPULATE_USER_LIST", users);
-
-            socket.join("all");
-            socket.to("all").emit("ADD_USER", user);
-
+            socket.emit("POPULATE_USER_LIST", Array.from(users));
+            socket.join(PUBLIC_ROOM);
+            socket.to(PUBLIC_ROOM).emit("ADD_USER", user);
             console.log("JOINED: " + username);
         }
     });
@@ -72,7 +72,7 @@ io.sockets.on('connection', function (socket) {
         delete users[socket.username];
         delete userSockets[socket.username];
 
-        socket.to("all").emit("DELETE_USER", socket.username);
+        socket.to(PUBLIC_ROOM).emit("DELETE_USER", socket.username);
 
         // delete socket from all rooms
         var roomKeys = Object.keys(socket.rooms);

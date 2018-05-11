@@ -20,7 +20,11 @@ const setupSocket = (dispatch) => {
 
     socket.on(userConstants.ADD_USER, (nick, age, city) => dispatch(userActions.addUser(nick, age, city)));
     socket.on(userConstants.DELETE_USER, (nick) => dispatch(userActions.deleteUser(nick)));
-    socket.on(userConstants.POPULATE_USER_LIST, (userList) => dispatch(userActions.populateUserList(userList)));
+
+    socket.on(userConstants.POPULATE_USER_LIST, (userList) => {
+        console.log(new Map(userList));
+        dispatch(userActions.populateUserList(new Map(userList)))
+    });
 
     socket.on(groupConstants.CREATE_GROUP, (groupId, name, members) => dispatch(groupActions.createGroup(groupId, name, members)));
     socket.on(groupConstants.DELETE_MEMBER_GROUP, (groupId, nick) => dispatch(groupActions.deleteMemberGroup(groupId, nick)));

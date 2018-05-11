@@ -1,6 +1,7 @@
 const { Map } = require('immutable');
 const initialState = new Map();
 const userList = (state = initialState, action) => {
+    console.log(action);
     switch (action.type) {
         case 'ADD_USER':
             return state.set(action.nick, [action.age, action.city]);
