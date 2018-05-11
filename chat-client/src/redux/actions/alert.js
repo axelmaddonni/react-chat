@@ -1,13 +1,13 @@
 import { alertConstants } from '../../constants/ActionTypes';
 
-function success(message) {
+export function success(message) {
     return { type: alertConstants.SUCCESS, message };
 }
 
-function error(message) {
+export function error(message) {
     return { type: alertConstants.ERROR, message };
 }
 
-function clear() {
+export function clear() {
     return { type: alertConstants.CLEAR };
 }

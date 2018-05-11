@@ -1,35 +1,40 @@
-import * as types from '../../constants/ActionTypes'
 import io from "socket.io-client"
 
-import { userActions, alertActions } from "../actions";
+import { loginConstants, userConstants, groupConstants, messageConstants } from "../../constants/ActionTypes";
+import { userActions, alertActions, loginActions, messageActions, groupActions  } from "../actions";
 import {history} from "../../helpers";
 
 const setupSocket = (dispatch) => {
     const socket = io.connect("http://localhost:3000");
 
-    socket.on(types.LOGIN_OK, (user) => {
+    socket.on(loginConstants.LOGIN_OK, (user) => {
         dispatch(alertActions.clear());
-        dispatch(userActions.loginOk(user));
+        dispatch(loginActions.loginOk(user));
         history.push('/');
     });
 
-    socket.on(types.POPULATE_USER_LIST, (userList) => {
-        dispatch(userActions.populateUserList(userList));
-    });
-
-    socket.on(types.LOGIN_ERROR, (error) => {
+    socket.on(loginConstants.LOGIN_ERROR, (error) => {
         dispatch(alertActions.error(error));
-        dispatch(userActions.loginError(error))
+        dispatch(loginActions.loginError(error))
     });
 
-    socket.on(types.ADD_USER, (nick, age, city) => dispatch(userActions.addUser(nick, age, city)));
-    socket.on(types.DELETE_USER, (nick) => dispatch(userActions.deleteUser(nick)));
-    socket.on(types.CREATE_GROUP, (groupId, name, members) => dispatch(userActions.createGroup(groupId, name, members)));
-    socket.on(types.DELETE_MEMBER_GROUP, (groupId, nick) => dispatch(userActions.deleteMemberGroup(groupId, nick)));
-    socket.on(types.RECEIVE_MESSAGE, (message) => dispatch(userActions.receiveMessage(message)));
-    socket.on(types.ADD_GROUP_MESSAGE, (groupId, message) => dispatch(userActions.addGroupMessage(groupId, message)));
+    socket.on(userConstants.ADD_USER, (nick, age, city) => dispatch(userActions.addUser(nick, age, city)));
+    socket.on(userConstants.DELETE_USER, (nick) => dispatch(userActions.deleteUser(nick)));
+    socket.on(userConstants.POPULATE_USER_LIST, (userList) => dispatch(userActions.populateUserList(userList)));
+
+    socket.on(groupConstants.CREATE_GROUP, (groupId, name, members) => dispatch(groupActions.createGroup(groupId, name, members)));
+    socket.on(groupConstants.DELETE_MEMBER_GROUP, (groupId, nick) => dispatch(groupActions.deleteMemberGroup(groupId, nick)));
+
+    socket.on(messageConstants.RECEIVE_PRIVATE,
+        (message) => dispatch(messageActions.receivePrivateMessage(message.author, message.receiver, message.data)));
+
+    socket.on(messageConstants.RECEIVE_PUBLIC,
+        (message) => dispatch(messageActions.receivePublicMessage(message.data)));
+
+    socket.on(messageConstants.RECEIVE_GROUP,
+        (groupId, message) => dispatch(messageActions.receiveGroupMessage(message.author, message.receiver, message.data)));
 
     return socket
-}
+};
 
 export default setupSocket

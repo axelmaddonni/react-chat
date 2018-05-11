@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {login, logout} from "../redux/actions/user";
+import { loginActions } from "../redux/actions";
 
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
         // reset login status
-        this.props.dispatch(logout());
+        this.props.dispatch(loginActions.logout());
 
         this.state = {
             user: {
@@ -40,7 +40,7 @@ class LoginPage extends React.Component {
         const { user } = this.state;
         const { dispatch } = this.props;
         if (user.nick && user.age && user.city) {
-            dispatch(login(user));
+            dispatch(loginActions.login(user));
         }
     }
 
