@@ -1,5 +1,5 @@
 import React from 'react'
-import ChatMessages from './chatMessages'
+import ChatMessages from '../smart/chatMessages'
 import ChatInput from './chatInput'
 import ChatHeader from '../smart/chatHeader'
 

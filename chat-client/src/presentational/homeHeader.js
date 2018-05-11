@@ -4,11 +4,11 @@ import GoTo from "./goTo";
 
 class HomeHeader extends React.Component {
     render() {
-        return <p>
+        return <div>
             CHAT
             <GoTo />
             <GoTo />
-        </p>
+        </div>
     }
 }
 

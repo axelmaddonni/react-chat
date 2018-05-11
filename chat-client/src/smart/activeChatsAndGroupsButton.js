@@ -8,12 +8,15 @@ class ActiveChatsAndGroupsButton extends React.Component {
 
     render() {
         return <div>
-            <div onClick={this.props.dispatchUpdateActiveChat(this.props.chatType, this.props.id)}> {getChatName(this.props.chatType, this.props.id)}</div>
+            <div onClick={this.props.dispatchUpdateActiveChat(this.props.chatType, this.props.id)}> {getChatName()}</div>
         </div>
     }
 }
 
-export function getChatName(type, id) {
+function getChatName() {
+
+    let type = this.props.chatType;
+    let id = this.props.id;
 
     if ( type === chatTypes.PRIVATE) {
         return this.props.userList.get(id);

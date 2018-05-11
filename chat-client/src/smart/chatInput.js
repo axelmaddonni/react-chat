@@ -1,22 +1,18 @@
 import { connect } from 'react-redux'
-import { sendMessage } from '../redux/actions'
-
+import { sendPublicMessage, sendPrivateMessage, sendGroupMessage } from '../redux/actions/message'
 import React from 'react'
+import {chatTypes} from "../constants/ActionTypes";
 
 class ChatInput extends React.Component {
 
     render() {
         let input;
-        let message;
 
         return <section id="chat-input">
             <input
                 onKeyPress={(e) => {
                     if (e.key === 'Enter') {
-                        message.data = input.value;
-                        message.author = this.props.author;
-                        message.receiver = this.props.receiver;
-                        this.props.sendMessage(message);
+                        dispatchSendMessage(input.value);
                         input.value = '';
                     }
                 }}
@@ -29,16 +25,41 @@ class ChatInput extends React.Component {
     }
 }
 
+function dispatchSendMessage(data) {
+    let chatType = this.props.activeChatInfo.chatType;
+    let id = this.props.activeChatInfo.id;
+    let nick = this.props.authentication.user.nick;
+
+    if ( chatType=== chatTypes.PRIVATE) {
+        this.props.dispatchSendPrivateMessage(id, nick , data);
+    } else {
+        if (chatType === chatTypes.GROUP) {
+            this.props.dispatchSendGroupMessage(id, nick, data);
+        } else {
+            if (chatType === chatTypes.PUBLIC) {
+                this.props.dispatchSendPublicMessage(nick, data);
+            }
+        }
+    }
+}
+
 function mapStateToProps(state) {
-    const { activeChatInfo } = state;
+    const { activeChatInfo, authentication } = state;
     return {
-        activeChatInfo
+        activeChatInfo,
+        authentication
     };
 }
 
 const mapDispatchToProps = dispatch => ({
-    sendMessage: (message) => {
-        dispatch(sendMessage(message))
+    dispatchSendPublicMessage: (message) => {
+        dispatch(sendPublicMessage(message))
+    },
+    dispatchSendPrivateMessage: (message) => {
+        dispatch(sendPrivateMessage(message))
+    },
+    dispatchSendGroupMessage: (message) => {
+        dispatch(sendGroupMessage(message))
     }
 })
 
