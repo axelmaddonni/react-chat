@@ -1,7 +1,8 @@
 import { messageConstants } from "../../constants/ActionTypes";
 
-export const sendPublicMessage = (data) => ({
+export const sendPublicMessage = (author, data) => ({
     type: messageConstants.SEND_PUBLIC,
+    author,
     data
 });
 
@@ -12,10 +13,10 @@ export const sendPrivateMessage = (author, receiver, data) => ({
     data
 });
 
-export const sendGroupMessage = (author, receiver, data) => ({
+export const sendGroupMessage = (author, groupId, data) => ({
     type: messageConstants.SEND_GROUP,
     author,
-    receiver,
+    groupId,
     data
 });
 
