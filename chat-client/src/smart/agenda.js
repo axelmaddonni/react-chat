@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import UserInfo from './userInfo'
+import UserInfo from '../presentational/userInfo'
+import { connect } from 'react-redux';
 
 class Agenda extends React.Component {
 
@@ -19,12 +19,12 @@ class Agenda extends React.Component {
     }
 }
 
-UserInfo.propTypes = {
-    userList: PropTypes.arrayOf({
-            nick: PropTypes.string.isRequired,
-            age: PropTypes.number.isRequired,
-            city: PropTypes.string.isRequired
-        }.isRequired)
+function mapStateToProps(state) {
+    const { userList } = state;
+    return {
+        userList
+    };
 }
 
-export default Agenda
+const connected = connect(mapStateToProps)(Agenda);
+export { connected as Agenda };

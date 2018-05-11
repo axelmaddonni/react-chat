@@ -43,3 +43,5 @@ export const chatTypes = {
     PRIVATE: 'PRIVATE',
     GROUP: 'GROUP'
 };
+
+export const publicChatName = "Public";

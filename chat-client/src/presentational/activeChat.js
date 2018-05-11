@@ -9,25 +9,10 @@ class ActiveChat extends React.Component {
     render() {
         return <section id="active-chat">
             <ChatHeader nick={this.props.receiver} />
-            <ChatMessages chats={this.props.chats} />
-            <ChatInput sendMessage={} author={this.props.author} receiver={this.props.receiver}/>
+            <ChatMessages chat={this.props.chat} />
+            <ChatInput activeChatInfo={this.props.activeChatInfo} author={this.props.author} />
         </section>
     }
-}
-
-//la funcion sendMessage como se la paso? - Manu
-//chat: map o arreglo? - Manu
-
-ActiveChat.propTypes = {
-    receiver: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    chats: PropTypes.instanceOf(Map(
-        PropTypes.string.isRequired,
-        PropTypes.shape({
-            data: PropTypes.string.isRequired,
-            author: PropTypes.string.isRequired,
-            receiver: PropTypes.string.isRequired
-        })).isRequired)
 }
 
 export default ActiveChat
