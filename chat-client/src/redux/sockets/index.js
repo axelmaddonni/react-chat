@@ -30,13 +30,13 @@ const setupSocket = (dispatch) => {
     socket.on(groupConstants.DELETE_MEMBER_GROUP, (groupId, nick) => dispatch(groupActions.deleteMemberGroup(groupId, nick)));
 
     socket.on(messageConstants.RECEIVE_PRIVATE,
-        (message) => dispatch(messageActions.receivePrivateMessage(message.author, message.receiver, message.data)));
+        (author, data) => dispatch(messageActions.receivePrivateMessage(author, data)));
 
     socket.on(messageConstants.RECEIVE_PUBLIC,
-        (message) => dispatch(messageActions.receivePublicMessage(message.data)));
+        (author, data) => dispatch(messageActions.receivePublicMessage(author, data)));
 
     socket.on(messageConstants.RECEIVE_GROUP,
-        (groupId, message) => dispatch(messageActions.receiveGroupMessage(message.author, message.receiver, message.data)));
+        (groupId, author, data) => dispatch(messageActions.receiveGroupMessage(groupId, author, data)));
 
     return socket
 };

@@ -4,7 +4,7 @@ const userList = (state = initialState, action) => {
     console.log(action);
     switch (action.type) {
         case 'ADD_USER':
-            return state.set(action.nick, [action.age, action.city]);
+            return state.set(action.nick, {age: action.age, city: action.city});
         case 'DELETE_USER':
             return state.delete(action.nick);
         case 'POPULATE_USER_LIST':

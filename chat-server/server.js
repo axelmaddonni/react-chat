@@ -19,26 +19,9 @@ var userSockets = new Map(); // maps nick to socket id
 
 const PUBLIC_ROOM = 'all';
 
-// function Message(author, receiver, data) {
-//     this.author = author;
-//     this.receiver = receiver;
-//     this.data = data;
-// }
-//
-// function User(nick, age, city) {
-//     this.nick = nick;
-//     this.age = age;
-//     this.city = city;
-// }
-//
-// function Group(id, name, members) {
-//     this.id = id;
-//     this.name = name;
-//     this.members = members;
-// }
-
 io.sockets.on('connection', function (socket) {
 
+    // User Events
     socket.on("LOGIN_REQUEST", (params) => {
         const user = params.user;
         const username = user.nick;
@@ -68,7 +51,10 @@ io.sockets.on('connection', function (socket) {
         }
     });
 
-    socket.on("LOGOUT", () => {
+    socket.on("LOGOUT", () => logout(socket));
+    socket.on('disconnect', () => logout(socket));
+
+    function logout(socket) {
         delete users[socket.username];
         delete userSockets[socket.username];
 
@@ -79,20 +65,45 @@ io.sockets.on('connection', function (socket) {
         var socketIdIndex = roomKeys.indexOf(socket.id);
         var rooms = roomKeys.splice( socketIdIndex, 1 );
         rooms.forEach((room) => socket.leave(room));
+    };
 
-        // TODO: echo globally that this client has left
-        //socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
+    // Message events
+    socket.on("SEND_PUBLIC_MESSAGE", (params) => {
+        socket.to(PUBLIC_ROOM).emit('RECEIVE_PUBLIC_MESSAGE', params.author, params.data);
     });
 
-    // TODO: hacer el send para los 3 tipos de mensajes
-    // socket.on("SEND_MESSAGE", (params) => {
-    //     console.log("SENDING MESSAGE");
-    //     io.sockets.socket(userSockets[params.message.receiver]).emit("RECEIVE_MESSAGE", params.message);
-    // });
+    socket.on("SEND_PRIVATE_MESSAGE", (params) => {
+        socket.to(userSockets.get(params.receiver)).emit('RECEIVE_PRIVATE_MESSAGE', params.author, params.data);
+    });
+
+    socket.on("SEND_GROUP_MESSAGE", (params) => {
+        socket.to(params.groupId).emit('RECEIVE_GROUP_MESSAGE', params.author, params.data);
+    });
 
     // Group Events
-    // socket.on(ADD_GROUP_MESSAGE, () => TODO);
-    // socket.on(CREATE_GROUP, () => TODO);
-    // socket.on(EXIT_GROUP, () => TODO);
+    socket.on("CREATE_GROUP", (params) => {
+        const newRoomId = randomId();
+        groups.set(newRoomId, { name: params.groupName, members: params.members });
 
+        socket.join(newRoomId);
+
+        for (var i = 0; i < params.members; i++) {
+            const nick = params.members[i];
+            const memberSocket = userSockets.get(nick);
+            memberSocket.join(newRoomId);
+            memberSocket.emit('ADD_GROUP', newRoomId, params.groupName, params.members);
+        }
+        socket.emit('ADD_GROUP', newRoomId, params.groupName, params.members);
+    });
+
+    socket.on("EXIT_GROUP", (params) => {
+        socket.to(params.groupId).emit('DELETE_MEMBER_GROUP', params.groupId, socket.username);
+        socket.leave(params.groupId);
+    });
+
+    function randomId() {
+        return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        )
+    }
 });

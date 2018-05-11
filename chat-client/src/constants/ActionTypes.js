@@ -6,8 +6,9 @@ export const userConstants = {
 
 export const groupConstants = {
     CREATE_GROUP: 'CREATE_GROUP',
+    ADD_GROUP: 'ADD_GROUP',
     EXIT_GROUP: 'EXIT_GROUP',
-    DELETE_MEMBER_GROUP: 'DELETE_MEMBER_GROUP'
+    DELETE_MEMBER_GROUP: 'DELETE_MEMBER_GROUP',
 };
 
 export const loginConstants = {
@@ -32,7 +33,7 @@ export const messageConstants = {
     RECEIVE_GROUP: 'RECEIVE_GROUP_MESSAGE'
 };
 
-export const activeChatsContants = {
+export const activeChatsConstants = {
     UPDATE_ACTIVE_CHAT: 'UPDATE_ACTIVE_CHAT',
     ADD_ACTIVE_CHAT: 'ADD_ACTIVE_CHAT',
     DELETE_ACTIVE_CHAT: 'DELETE_ACTIVE_CHAT'

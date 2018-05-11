@@ -1,7 +1,13 @@
 import { groupConstants } from "../../constants/ActionTypes";
 
-export const createGroup = (groupId, groupName, members) => ({
+export const createGroup = (groupName, members) => ({
     type: groupConstants.CREATE_GROUP,
+    groupName,
+    members
+});
+
+export const addGroup = (groupId, groupName, members) => ({
+    type: groupConstants.ADD_GROUP,
     groupId,
     groupName,
     members
