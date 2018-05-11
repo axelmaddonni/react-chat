@@ -1,16 +1,17 @@
 import { takeEvery } from 'redux-saga/effects'
-import * as types from '../../constants/ActionTypes'
+import * as constants from '../../constants/ActionTypes'
 
 const handleNewMessage = function* handleNewMessage(socket) {
 
-    yield takeEvery(types.LOGIN_REQUEST, emitAction);
-    yield takeEvery(types.LOGOUT, emitAction);
+    yield takeEvery(constants.loginConstants.LOGIN_REQUEST, emitAction);
+    yield takeEvery(constants.loginConstants.LOGOUT, emitAction);
 
-    yield takeEvery(types.SEND_MESSAGE, emitAction);
-    yield takeEvery(types.ADD_GROUP_MESSAGE, emitAction); // TODO: duda, agarrara tambien cuando viene del sv?
+    yield takeEvery(constants.messageConstants.SEND_PRIVATE, emitAction);
+    yield takeEvery(constants.messageConstants.SEND_GROUP, emitAction);
+    yield takeEvery(constants.messageConstants.SEND_PUBLIC, emitAction);
 
-    yield takeEvery(types.CREATE_GROUP, emitAction);
-    yield takeEvery(types.EXIT_GROUP, emitAction);
+    yield takeEvery(constants.groupConstants.CREATE_GROUP, emitAction);
+    yield takeEvery(constants.groupConstants.EXIT_GROUP, emitAction);
 
     function emitAction(action) {
         let params = Object.assign({}, action);

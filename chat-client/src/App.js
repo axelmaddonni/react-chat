@@ -6,7 +6,7 @@ import { history } from './helpers';
 import { PrivateRoute } from './smart/privateRoute';
 import { HomePage } from './presentational/homePage';
 import { LoginPage } from './presentational/loginPage';
-import { alertActions} from "./redux/actions/alert";
+import { alertActions} from "./redux/actions";
 
 class App extends React.Component {
     constructor(props) {

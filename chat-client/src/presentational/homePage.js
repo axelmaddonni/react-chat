@@ -11,7 +11,7 @@ class HomePage extends Component {
             <div className="App">
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
-                    <h5>Welcome to ReactChat { localStorage.getItem('user').nick }</h5>
+                    <h5>Welcome to ReactChat { sessionStorage.getItem('user').nick }</h5>
                 </header>
                 <Link to="/login">Logout</Link>
                 <Agenda/>
