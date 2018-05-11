@@ -1,11 +1,25 @@
 import { connect } from 'react-redux'
-import activeChatsAndGroupsPresentational from '../presentational/chatInput'
-import { updateActiveChat } from '../redux/actions'
+import { activeChatsAndGroupsButton } from '../activeChatsAndGroupsButton'
+import React from 'react'
 
-const mapDispatchToProps = dispatch => ({
-    updateActiveChat: (nick) => {
-        dispatch(updateActiveChat(nick))
+class ActiveChatsAndGroups extends React.Component {
+
+    render() {
+        return  <div id="chat-messages">
+            {this.props.activeChatList.map(chatInfo => (
+                <activeChatsAndGroupsButton chatInfo={chatInfo}/>
+            ))}
+
+        </div>
     }
-})
+}
 
-export const updateActiveChat = connect(() => ({}), mapDispatchToProps)(activeChatsAndGroupsPresentational)
+function mapStateToProps(state) {
+    const { activeChatList } = state;
+    return {
+        activeChatList
+    };
+}
+
+const connected = connect(mapStateToProps)(ActiveChatsAndGroups);
+export { connected as ActiveChatsAndGroups };

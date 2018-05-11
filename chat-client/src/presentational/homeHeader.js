@@ -1,14 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import GoToHome from "./goToHome";
-import GoToAgenda from "./goToAgenda";
+import GoTo from "./goTo";
 
 class HomeHeader extends React.Component {
     render() {
         return <p>
             CHAT
-            <GoToHome />
-            <GoToAgenda />
+            <GoTo />
+            <GoTo />
         </p>
     }
 }

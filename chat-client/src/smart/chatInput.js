@@ -8,4 +8,4 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-export const sendMessage = connect(() => ({}), mapDispatchToProps)(chatInputPresentational)
+export const SendMessage = connect(() => ({}), mapDispatchToProps)(chatInputPresentational)
