@@ -1,4 +1,4 @@
-import { activeChatsConstants } from "../../constants/ActionTypes";
+import {activeChatsConstants, loginConstants} from "../../constants/ActionTypes";
 const { List } = require('immutable');
 
 const activeChatList = (state = [], action) => {
@@ -8,7 +8,6 @@ const activeChatList = (state = [], action) => {
             list = state;
             list.push({chatType: action.chatType, id: action.id});
             return list;
-
         case activeChatsConstants.DELETE_ACTIVE_CHAT:
             list = new List();
             state.forEach(function(activeChatInfo) {
@@ -17,6 +16,8 @@ const activeChatList = (state = [], action) => {
                 }
                 return list;
             });
+        case loginConstants.LOGOUT:
+            return [];
         default:
             return state
     }

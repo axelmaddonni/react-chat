@@ -1,4 +1,5 @@
 // TODO: cambiar por nuevas acciones
+import { activeChatsConstants, chatTypes, loginConstants} from "../../constants/ActionTypes";
 
 const { Map } = require('immutable');
 const initialState = new Map();
@@ -16,9 +17,7 @@ const chats = (state = initialState, action) => {
             }else{
                 return state.set(action.message.receiver, [action.message]);
             }
-        case 'DELETE_CHAT':
-            return state.set(action.nick, []);
-        case 'LOGOUT':
+        case loginConstants.LOGOUT:
             return initialState;
         default:
             return state

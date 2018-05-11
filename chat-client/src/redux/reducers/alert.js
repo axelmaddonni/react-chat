@@ -1,4 +1,4 @@
-import { alertConstants } from "../../constants/ActionTypes";
+import {alertConstants, loginConstants} from "../../constants/ActionTypes";
 
 export default function alert(state = {}, action) {
     switch (action.type) {
@@ -13,6 +13,8 @@ export default function alert(state = {}, action) {
                 message: action.message
             };
         case alertConstants.CLEAR:
+            return {};
+        case loginConstants.LOGOUT:
             return {};
         default:
             return state
