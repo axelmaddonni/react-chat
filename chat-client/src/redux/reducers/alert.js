@@ -1,4 +1,4 @@
-import { alertConstants } from '../../constants/ActionTypes';
+import { alertConstants } from "../../constants/ActionTypes";
 
 export default function alert(state = {}, action) {
     switch (action.type) {

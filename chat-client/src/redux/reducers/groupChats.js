@@ -1,3 +1,5 @@
+// TODO: cambiar por nuevas acciones
+
 const { Map } = require('immutable');
 const initialState = new Map();
 const groupChats = (state = initialState, action) => {
