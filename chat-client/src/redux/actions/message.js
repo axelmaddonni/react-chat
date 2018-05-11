@@ -6,35 +6,35 @@ export const sendPublicMessage = (author, data) => ({
     data
 });
 
-export const sendPrivateMessage = (author, receiver, data) => ({
+export const sendPrivateMessage = (receiver, author, data) => ({
     type: messageConstants.SEND_PRIVATE,
-    author,
     receiver,
-    data
-});
-
-export const sendGroupMessage = (author, groupId, data) => ({
-    type: messageConstants.SEND_GROUP,
     author,
+    data
+});
+
+export const sendGroupMessage = (groupId, author, data) => ({
+    type: messageConstants.SEND_GROUP,
     groupId,
+    author,
     data
 });
 
-export const receivePublicMessage = (data) => ({
+export const receivePublicMessage = (author, data) => ({
     type: messageConstants.RECEIVE_PUBLIC,
+    author,
     data
 });
 
-export const receivePrivateMessage = (author, receiver, data) => ({
+export const receivePrivateMessage = (author, data) => ({
     type: messageConstants.RECEIVE_PRIVATE,
     author,
-    receiver,
     data
 });
 
-export const receiveGroupMessage = (author, receiver, data) => ({
+export const receiveGroupMessage = (groupId, author, data) => ({
     type: messageConstants.RECEIVE_GROUP,
+    groupId,
     author,
-    receiver,
     data
 });

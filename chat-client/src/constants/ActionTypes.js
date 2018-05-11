@@ -6,8 +6,9 @@ export const userConstants = {
 
 export const groupConstants = {
     CREATE_GROUP: 'CREATE_GROUP',
+    ADD_GROUP: 'ADD_GROUP',
     EXIT_GROUP: 'EXIT_GROUP',
-    DELETE_MEMBER_GROUP: 'DELETE_MEMBER_GROUP'
+    DELETE_MEMBER_GROUP: 'DELETE_MEMBER_GROUP',
 };
 
 export const loginConstants = {
