@@ -8,20 +8,25 @@ class ChatInput extends React.Component {
     render() {
         let input;
 
-        return <section id="chat-input">
-            <input
-                onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                        dispatchSendMessage(input.value);
-                        input.value = '';
-                    }
-                }}
-                type="text"
-                ref={(node) => {
-                    input = node
-                }}
-            />
-        </section>
+        return <div class="message-input">
+            <div class="wrap">
+                <input
+                    onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                            dispatchSendMessage(input.value);
+                            input.value = '';
+                        }
+                    }}
+                    type="text"
+                    ref={(node) => {
+                        input = node
+                    }}
+                />
+                <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+                <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                //TODO ver que hacer con este boton
+            </div>
+        </div>
     }
 }
 
@@ -63,5 +68,5 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-const connected = connect(mapStateToProps, mapDispatchToProps())(ChatInput);
-export { connected as ChatInput };
+const connectedChatInput = connect(mapStateToProps, mapDispatchToProps)(ChatInput);
+export { connectedChatInput as ChatInput };

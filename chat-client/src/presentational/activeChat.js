@@ -1,16 +1,16 @@
 import React from 'react'
-import ChatMessages from '../smart/chatMessages'
-import ChatInput from './chatInput'
-import ChatHeader from '../smart/chatHeader'
+import {ChatMessages} from '../smart/chatMessages'
+import {ChatInput} from '../smart/chatInput'
+import {ChatHeader} from '../smart/chatHeader'
 
 class ActiveChat extends React.Component {
 
     render() {
-        return <section id="active-chat">
+        return <div class="content">
             <ChatHeader/>
             <ChatMessages/>
             <ChatInput/>
-        </section>
+        </div>
     }
 }
 

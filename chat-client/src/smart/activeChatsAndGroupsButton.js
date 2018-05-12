@@ -7,9 +7,15 @@ import {chatTypes, publicChatName} from "../constants/ActionTypes";
 class ActiveChatsAndGroupsButton extends React.Component {
 
     render() {
-        return <div>
-            <div onClick={this.props.dispatchUpdateActiveChat(this.props.chatType, this.props.id)}> {getChatName()}</div>
-        </div>
+
+        return <li className="contact">
+            <div className="wrap">
+                <img src="https://api.adorable.io/avatars/285/louislitt.png" alt=""/>
+                <div className="meta">
+                    <div onClick={this.props.dispatchUpdateActiveChat(this.props.chatType, this.props.id)}> {getChatName()}</div>
+                </div>
+            </div>
+        </li>
     }
 }
 

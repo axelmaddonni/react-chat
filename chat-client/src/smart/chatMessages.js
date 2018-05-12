@@ -1,14 +1,15 @@
 import React from 'react'
-import ChatMessage from '../presentational/chatMessage'
+import { connect } from 'react-redux'
+import {ChatMessage} from '../presentational/chatMessage'
 import {chatTypes} from "../constants/ActionTypes";
 
 class ChatMessages extends React.Component {
 
     render() {
 
-        let messages = getMessages();
+        let messages = getMessages(this.props.activeChatInfo, this.props.chats, this.props.groupChats, this.props.publicChat);
 
-        return <section id="chat-messages">
+        return <div class="messages">
             <ul>
                 {messages.map(message => (
                     <ChatMessage
@@ -17,23 +18,27 @@ class ChatMessages extends React.Component {
                     />
                 ))}
             </ul>
-        </section>
+        </div>
     }
 }
 
-function getMessages() {
+function getMessages(activeChatInfo, chats, groupChats, publicChat) {
 
-    let chatType = this.props.activeChatInfo.chatType;
-    let id = this.props.activeChatInfo.id;
+    let chatType = activeChatInfo.chatType;
+    let id = activeChatInfo.id;
 
     if ( chatType=== chatTypes.PRIVATE) {
-        return this.props.chats.get(id);
+        return chats.get(id);
     } else {
         if (chatType === chatTypes.GROUP) {
-            return this.props.groupChats.get(id);
+            return groupChats.get(id);
         } else {
             if (chatType === chatTypes.PUBLIC) {
-                return this.props.publicChat;
+                //TODO
+                //return publicChat;
+                return [{data: "Mensaje Default", author:"Manu"}];
+            } else {
+                return [{data: "Mensaje Default", author:"Manu"}];
             }
         }
     }
@@ -49,5 +54,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connected = connect(mapStateToProps)(ChatMessages);
-export { connected as ChatMessages };
+const connectedChatMessages = connect(mapStateToProps)(ChatMessages);
+export { connectedChatMessages as ChatMessages };

@@ -1,16 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { activeChatsAndGroupsButton } from '../activeChatsAndGroupsButton'
+import { ActiveChatsAndGroupsButton } from './activeChatsAndGroupsButton'
+import HomeHeader from "../presentational/homeHeader";
 
 class ActiveChatsAndGroups extends React.Component {
 
     render() {
-        return  <div id="chat-messages">
+        console.log("PROPS:");
+        console.log(this.props);
+
+        return <div id="sidepanel"> <HomeHeader/>
+        <div id="chat-messages">
             {this.props.activeChatList.map(chatInfo => (
-                <activeChatsAndGroupsButton chatInfo={chatInfo}/>
+                <ActiveChatsAndGroupsButton chatInfo={chatInfo}/>
             ))}
 
-        </div>
+        </div> </div>
     }
 }
 

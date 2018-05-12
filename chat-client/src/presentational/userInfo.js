@@ -1,11 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import '../index.css';
 
 class UserInfo extends React.Component {
     render() {
-        return <div>
-            <div>{this.props.nick} - {this.props.age} - {this.props.city}</div>
-        </div>
+        return <li className="contact">
+                <div className="wrap">
+                    <img src="https://api.adorable.io/avatars/285/louislitt.png" alt=""/>
+                    <div className="meta">
+                        <p className="name">{this.props.nick}</p>
+                        <p className="preview">Age: {this.props.age} City: {this.props.city}</p>
+                    </div>
+                </div>
+            </li>
     }
 }
 
