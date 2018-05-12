@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { history } from './helpers';
 import { PrivateRoute } from './smart/privateRoute';
-import { HomePage } from './presentational/homePage';
+import { HomePage } from './presentational/homePageTest';
 import { LoginPage } from './smart/loginPage';
 import { alertActions} from "./redux/actions";
 
@@ -22,21 +22,12 @@ class App extends React.Component {
     render() {
         const { alert } = this.props;
         return (
-            <div className="jumbotron">
-                <div className="container">
-                    <div className="col-sm-8 col-sm-offset-2">
-                        {alert.message &&
-                        <div className={`alert ${alert.type}`}>{alert.message}</div>
-                        }
                         <Router history={history}>
                             <div>
                                 <PrivateRoute exact path="/" component={HomePage} />
                                 <Route path="/login" component={LoginPage} />
                             </div>
                         </Router>
-                    </div>
-                </div>
-            </div>
         );
     }
 }
