@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
-import chats from './privateChats'
+import privateChats from './privateChats'
 import groupChats from './groupChats'
 import userList from './userList'
+import publicChats from './publicChats'
 import activeChatList from './activeChatsList'
 import activeChatInfo from './activeChatInfo'
 import groupList from './groupList'
@@ -13,7 +14,8 @@ const reducers = combineReducers({
     groupList,
     activeChatList,
     activeChatInfo,
-    chats,
+    privateChats,
+    publicChats,
     groupChats,
     authentication,
     alert

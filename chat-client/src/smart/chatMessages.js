@@ -7,7 +7,11 @@ class ChatMessages extends React.Component {
 
     render() {
 
-        let messages = getMessages(this.props.activeChatInfo, this.props.chats, this.props.groupChats, this.props.publicChat);
+        console.log("PROPS");
+        console.log(this.props);
+        let messages = getMessages(this.props.activeChatInfo, this.props.privateChats, this.props.groupChats, this.props.publicChats);
+        console.log("messages:");
+        console.log(messages);
 
         return <div class="messages">
             <ul>
@@ -22,21 +26,21 @@ class ChatMessages extends React.Component {
     }
 }
 
-function getMessages(activeChatInfo, chats, groupChats, publicChat) {
+function getMessages(activeChatInfo, privateChats, groupChats, publicChats) {
 
     let chatType = activeChatInfo.chatType;
     let id = activeChatInfo.id;
 
     if ( chatType=== chatTypes.PRIVATE) {
-        return chats.get(id);
+        return privateChats.get(id);
     } else {
         if (chatType === chatTypes.GROUP) {
             return groupChats.get(id);
         } else {
             if (chatType === chatTypes.PUBLIC) {
-                //TODO
-                //return publicChat;
-                return [{data: "Mensaje Default", author:"Manu"}];
+                console.log("Public chat:");
+                console.log(publicChats);
+                return publicChats;
             } else {
                 return [{data: "Mensaje Default", author:"Manu"}];
             }
@@ -45,12 +49,12 @@ function getMessages(activeChatInfo, chats, groupChats, publicChat) {
 }
 
 function mapStateToProps(state) {
-    const { activeChatInfo, chats, groupChats, publicChat } = state;
+    const { activeChatInfo, privateChats, groupChats, publicChats } = state;
     return {
         activeChatInfo,
-        chats,
+        privateChats,
         groupChats,
-        publicChat
+        publicChats
     };
 }
 
