@@ -1,21 +1,20 @@
-// TODO: cambiar por nuevas acciones
-import { activeChatsConstants, chatTypes, loginConstants} from "../../constants/ActionTypes";
+import { messageConstants, loginConstants} from "../../constants/ActionTypes";
 
 const { Map } = require('immutable');
 const initialState = new Map();
-const chats = (state = initialState, action) => {
+const privateChats = (state = initialState, action) => {
     switch (action.type) {
-        case 'RECEIVE_MESSAGE':
-            if(state.has(action.message.author)){
-                return state.set(action.message.author, state.get(action.message.author).push(action.message));
+        case messageConstants.SEND_PRIVATE:
+            if(state.has(action.receiver)){
+                return state.set(action.receiver, state.get(action.receiver).push({author:action.author, data: action.data}));
             }else{
-                return state.set(action.message.author, [action.message]);
+                return state.set(action.receiver, [{author:action.author, data: action.data}]);
             }
-        case 'SEND_MESSAGE':
-            if(state.has(action.message.receiver)){
-                return state.set(action.message.receiver, state.get(action.message.receiver).push(action.message));
+        case messageConstants.RECEIVE_PRIVATE:
+            if(state.has(action.author)){
+                return state.set(action.author, state.get(action.author).push({author:action.author, data: action.data}));
             }else{
-                return state.set(action.message.receiver, [action.message]);
+                return state.set(action.author, [{author:action.author, data: action.data}]);
             }
         case loginConstants.LOGOUT:
             return initialState;
@@ -24,4 +23,4 @@ const chats = (state = initialState, action) => {
     }
 };
 
-export default chats
+export default privateChats
