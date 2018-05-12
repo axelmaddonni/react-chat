@@ -7,6 +7,7 @@ class ChatInput extends React.Component {
 
     render() {
         let input;
+        let data;
 
         return <div class="message-input">
             <div class="wrap">
@@ -15,22 +16,27 @@ class ChatInput extends React.Component {
                         if (e.key === 'Enter') {
                             dispatchSendMessage(this.props, input.value);
                             input.value = '';
+                        } else {
+                            data = input.value;
                         }
                     }}
                     type="text"
                     ref={(node) => {
                         input = node
                     }}
+
                 />
                 <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-                <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-                //TODO ver que hacer con este boton
+                {/*TODO ver que hacer con este boton*/}
             </div>
         </div>
     }
 }
 
 function dispatchSendMessage(props, data) {
+    console.log("Data:");
+    console.log(data);
+
     let chatType = props.activeChatInfo.chatType;
     let id = props.activeChatInfo.id;
     let nick = props.authentication.user.nick;
@@ -57,14 +63,14 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => ({
-    dispatchSendPublicMessage: (message) => {
-        dispatch(sendPublicMessage(message))
+    dispatchSendPublicMessage: (author, data) => {
+        dispatch(sendPublicMessage(author, data))
     },
-    dispatchSendPrivateMessage: (message) => {
-        dispatch(sendPrivateMessage(message))
+    dispatchSendPrivateMessage: (receiver, author, data) => {
+        dispatch(sendPrivateMessage(receiver, author, data))
     },
-    dispatchSendGroupMessage: (message) => {
-        dispatch(sendGroupMessage(message))
+    dispatchSendGroupMessage: (groupId, author, data) => {
+        dispatch(sendGroupMessage(groupId, author, data))
     }
 })
 

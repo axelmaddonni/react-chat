@@ -1,14 +1,14 @@
 import { groupConstants, loginConstants } from "../../constants/ActionTypes";
 
 const { Map } = require('immutable');
-const initialState = new Map();
+const initialState = Map({});
 
 const groupList = (state = initialState, action) => {
     switch (action.type) {
         case groupConstants.ADD_GROUP:
-            return state.set(action.groupId, {groupName: action.groupName, members: action.members});
+            return Map(state.set(action.groupId, {groupName: action.groupName, members: action.members}));
         case groupConstants.EXIT_GROUP:
-            return state.delete(action.groupId);
+            return Map(state.delete(action.groupId));
         case groupConstants.DELETE_MEMBER_GROUP:
             const members = state.get(action.groupId).members;
             const newMembers = [];
@@ -17,7 +17,7 @@ const groupList = (state = initialState, action) => {
                     newMembers.push(member);
                 }
             });
-            return state.set(action.groupId, {groupName: state.get(action.groupId).groupName, members:newMembers});
+            return Map(state.set(action.groupId, {groupName: state.get(action.groupId).groupName, members:newMembers}));
         case loginConstants.LOGOUT:
             return initialState;
         default:

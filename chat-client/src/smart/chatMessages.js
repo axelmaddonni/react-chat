@@ -7,11 +7,7 @@ class ChatMessages extends React.Component {
 
     render() {
 
-        console.log("PROPS");
-        console.log(this.props);
         let messages = getMessages(this.props.activeChatInfo, this.props.privateChats, this.props.groupChats, this.props.publicChats);
-        console.log("messages:");
-        console.log(messages);
 
         return <div class="messages">
             <ul>
@@ -38,8 +34,6 @@ function getMessages(activeChatInfo, privateChats, groupChats, publicChats) {
             return groupChats.get(id);
         } else {
             if (chatType === chatTypes.PUBLIC) {
-                console.log("Public chat:");
-                console.log(publicChats);
                 return publicChats;
             } else {
                 return [{data: "Mensaje Default", author:"Manu"}];

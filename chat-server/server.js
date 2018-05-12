@@ -55,16 +55,18 @@ io.sockets.on('connection', function (socket) {
     socket.on('disconnect', () => logout(socket));
 
     function logout(socket) {
-        delete users[socket.username];
-        delete userSockets[socket.username];
+        if (users.has(socket.username)) {
+            delete users[socket.username];
+            delete userSockets[socket.username];
 
-        socket.to(PUBLIC_ROOM).emit("DELETE_USER", socket.username);
+            socket.to(PUBLIC_ROOM).emit("DELETE_USER", socket.username);
 
-        // delete socket from all rooms
-        var roomKeys = Object.keys(socket.rooms);
-        var socketIdIndex = roomKeys.indexOf(socket.id);
-        var rooms = roomKeys.splice( socketIdIndex, 1 );
-        rooms.forEach((room) => socket.leave(room));
+            // delete socket from all rooms
+            var roomKeys = Object.keys(socket.rooms);
+            var socketIdIndex = roomKeys.indexOf(socket.id);
+            var rooms = roomKeys.splice( socketIdIndex, 1 );
+            rooms.forEach((room) => socket.leave(room));
+        }
     };
 
     // Message events

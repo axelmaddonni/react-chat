@@ -1,6 +1,5 @@
 import React from 'react'
 import UserInfo from '../presentational/userInfo'
-import HomeHeader from '../presentational/homeHeader'
 import { connect } from 'react-redux';
 import '../index.css';
 

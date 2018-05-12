@@ -1,7 +1,7 @@
 import io from "socket.io-client"
 
 import { loginConstants, userConstants, groupConstants, messageConstants } from "../../constants/ActionTypes";
-import { userActions, alertActions, loginActions, messageActions, groupActions  } from "../actions";
+import { userActions, alertActions, loginActions, messageActions, groupActions, activeChatActions  } from "../actions";
 import {history} from "../../helpers";
 
 const setupSocket = (dispatch) => {
@@ -19,7 +19,11 @@ const setupSocket = (dispatch) => {
         dispatch(loginActions.loginError(error))
     });
 
-    socket.on(userConstants.ADD_USER, (nick, age, city) => dispatch(userActions.addUser(nick, age, city)));
+    socket.on(userConstants.ADD_USER, (user) => {
+        dispatch(userActions.addUser(user.nick, user.age, user.city));
+        // dispatch(messageActions.receivePrivateMessage(user.nick, "Hola"));
+        // dispatch(activeChatActions.updateActiveChat("PRIVATE", user.nick));
+    });
     socket.on(userConstants.DELETE_USER, (nick) => dispatch(userActions.deleteUser(nick)));
 
     socket.on(userConstants.POPULATE_USER_LIST, (userList) => {
