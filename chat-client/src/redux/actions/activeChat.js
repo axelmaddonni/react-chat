@@ -1,19 +1,19 @@
-import { activeChatsContants } from "../../constants/ActionTypes";
+import { activeChatsConstants } from "../../constants/ActionTypes";
 
 export const addActiveChat = (chatType, id) => ({
-    type: activeChatsContants.ADD_ACTIVE_CHAT,
+    type: activeChatsConstants.ADD_ACTIVE_CHAT,
     chatType,
     id
 });
 
 export const deleteActiveChat = (chatType, id) => ({
-    type: activeChatsContants.DELETE_ACTIVE_CHAT,
+    type: activeChatsConstants.DELETE_ACTIVE_CHAT,
     chatType,
     id
 });
 
 export const updateActiveChat = (chatType, id) => ({
-    type: activeChatsContants.UPDATE_ACTIVE_CHAT,
+    type: activeChatsConstants.UPDATE_ACTIVE_CHAT,
     chatType,
     id
 });
