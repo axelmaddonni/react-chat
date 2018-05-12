@@ -48,32 +48,32 @@ class LoginPage extends React.Component {
         const { loggingIn } = this.props;
         const { user, submitted } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Login</h2>
+            <div class="col-md-6 col-md-offset-3">
+                <h2 class="form-title"><i className="fa fa-user-circle" aria-hidden="true"></i> Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !user.nick ? ' has-error' : '')}>
-                        <label htmlFor="nick">Nick</label>
-                        <input type="text" className="form-control" name="nick" value={user.nick} onChange={this.handleChange} />
+                    <div class={'form-group' + (submitted && !user.nick ? ' has-error' : '')}>
+                        <i className="fa fa-angle-double-right" aria-hidden="true"></i> <label htmlFor="nick" class="form-text">Nick</label>
+                        <input type="text" class="form-control" name="nick" value={user.nick} onChange={this.handleChange} />
                         {submitted && !user.nick &&
-                        <div className="help-block">Nick is required</div>
+                        <div class="help-block">Nick is required</div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !user.age ? ' has-error' : '')}>
-                        <label htmlFor="age">Age</label>
-                        <input type="text" className="form-control" name="age" value={user.age} onChange={this.handleChange} />
+                    <div class={'form-group' + (submitted && !user.age ? ' has-error' : '')}>
+                        <i className="fa fa-calendar" aria-hidden="true"></i> <label htmlFor="age" class="form-text">Age</label>
+                        <input type="text" class="form-control" name="age" value={user.age} onChange={this.handleChange} />
                         {submitted && !user.age &&
-                        <div className="help-block">Age is required</div>
+                        <div class="help-block">Age is required</div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !user.city ? ' has-error' : '')}>
-                        <label htmlFor="city">City</label>
-                        <input type="text" className="form-control" name="city" value={user.city} onChange={this.handleChange} />
+                    <div class={'form-group' + (submitted && !user.city ? ' has-error' : '')}>
+                        <i className="fa fa-building" aria-hidden="true"></i> <label htmlFor="city" class="form-text" >City</label>
+                        <input type="text" class="form-control" name="city" value={user.city} onChange={this.handleChange} />
                         {submitted && !user.city &&
-                        <div className="help-block">City is required</div>
+                        <div class="help-block">City is required</div>
                         }
                     </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary">Login</button>
+                    <div class="form-group">
+                        <button class="form-button">Login</button>
                         {loggingIn &&
                         <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                         }
