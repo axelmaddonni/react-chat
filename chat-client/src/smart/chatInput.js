@@ -13,7 +13,7 @@ class ChatInput extends React.Component {
                 <input
                     onKeyPress={(e) => {
                         if (e.key === 'Enter') {
-                            dispatchSendMessage(input.value);
+                            dispatchSendMessage(this.props, input.value);
                             input.value = '';
                         }
                     }}
@@ -30,19 +30,19 @@ class ChatInput extends React.Component {
     }
 }
 
-function dispatchSendMessage(data) {
-    let chatType = this.props.activeChatInfo.chatType;
-    let id = this.props.activeChatInfo.id;
-    let nick = this.props.authentication.user.nick;
+function dispatchSendMessage(props, data) {
+    let chatType = props.activeChatInfo.chatType;
+    let id = props.activeChatInfo.id;
+    let nick = props.authentication.user.nick;
 
     if ( chatType=== chatTypes.PRIVATE) {
-        this.props.dispatchSendPrivateMessage(id, nick , data);
+        props.dispatchSendPrivateMessage(id, nick , data);
     } else {
         if (chatType === chatTypes.GROUP) {
-            this.props.dispatchSendGroupMessage(id, nick, data);
+            props.dispatchSendGroupMessage(id, nick, data);
         } else {
             if (chatType === chatTypes.PUBLIC) {
-                this.props.dispatchSendPublicMessage(nick, data);
+                props.dispatchSendPublicMessage(nick, data);
             }
         }
     }

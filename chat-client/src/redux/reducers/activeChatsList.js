@@ -1,7 +1,7 @@
-import {activeChatsConstants, loginConstants} from "../../constants/ActionTypes";
+import {activeChatsConstants, chatTypes, loginConstants} from "../../constants/ActionTypes";
 const { List } = require('immutable');
-
-const activeChatList = (state = [], action) => {
+const initialState = [{chatType: chatTypes.PUBLIC, id: undefined}];
+const activeChatList = (state = initialState, action) => {
     switch (action.type) {
         case activeChatsConstants.ADD_ACTIVE_CHAT:
             let list = new List();
