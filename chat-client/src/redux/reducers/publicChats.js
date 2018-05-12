@@ -3,13 +3,9 @@ import { messageConstants, loginConstants} from "../../constants/ActionTypes";
 const publicChats = (state = [], action) => {
     switch (action.type) {
         case messageConstants.SEND_PUBLIC:
-            let newState = state;
-            newState.push({author: action.author, data: action.data});
-            return newState;
+            return state.concat([{author: action.author, data: action.data}]);
         case messageConstants.RECEIVE_PUBLIC:
-            newState = state;
-            newState.push({author: action.author, data: action.data});
-            return newState;
+            return state.concat([{author: action.author, data: action.data}]);
         case loginConstants.LOGOUT:
             return [];
         default:
