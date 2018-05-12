@@ -19,6 +19,7 @@ const store = createStore(
 )
 
 store.subscribe(() => {
+    console.log("STATE CHANGED");
     console.log(store.getState());
 });
 

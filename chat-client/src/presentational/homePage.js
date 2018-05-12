@@ -1,28 +1,18 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
-import '../App.css';
-import {connect} from "react-redux";
-import { Link } from 'react-router-dom';
-import {Agenda} from "../smart/agenda"
+import ActiveChat from "../presentational/activeChat";
+import SidePanel from "./sidePanel";
 
 class HomePage extends Component {
     render() {
+        console.log("RENDERING HOME PAGE");
+        console.log(this.props);
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h5>Welcome to ReactChat { sessionStorage.getItem('user').nick }</h5>
-                </header>
-                <Link to="/login">Logout</Link>
-                <Agenda/>
-            </div>
+                <div id="frame">
+                    <SidePanel />
+                    <ActiveChat />
+                </div>
         );
     }
 }
 
-function mapStateToProps(state) {
-    return {};
-}
-
-const connected = connect(mapStateToProps)(HomePage);
-export { connected as HomePage }
+export default HomePage

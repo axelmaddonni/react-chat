@@ -8,6 +8,7 @@ const setupSocket = (dispatch) => {
     const socket = io.connect("http://localhost:3000");
 
     socket.on(loginConstants.LOGIN_OK, (user) => {
+        console.log("SOCKETS LOGIN OK");
         dispatch(alertActions.clear());
         dispatch(loginActions.loginOk(user));
         history.push('/');

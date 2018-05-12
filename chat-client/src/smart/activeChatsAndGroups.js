@@ -9,13 +9,13 @@ class ActiveChatsAndGroups extends React.Component {
         console.log("PROPS:");
         console.log(this.props);
 
-        return <div id="sidepanel"> <HomeHeader/>
-        <div id="chat-messages">
-            {this.props.activeChatList.map(chatInfo => (
-                <ActiveChatsAndGroupsButton chatInfo={chatInfo}/>
-            ))}
-
-        </div> </div>
+        return (
+            <div id="chat-messages">
+                {this.props.activeChatList.map(chatInfo => (
+                    <ActiveChatsAndGroupsButton chatInfo={chatInfo}/>
+                ))}
+            </div>
+        );
     }
 }
 

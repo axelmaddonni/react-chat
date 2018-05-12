@@ -11,17 +11,17 @@ class Agenda extends React.Component {
         this.props.userList.forEach((value, key) => keys.push(key));
         console.log("KEYS:");
         console.log(keys);
-        return  <div id="sidepanel"> <HomeHeader/>
-
-        <div id="contacts">
-            <ul id="lista">
-                {keys.map((key) => (<UserInfo
-                    nick={key}
-                    age={this.props.userList.get(key).age}
-                    city={this.props.userList.get(key).city}
-                />))}
-            </ul>
-        </div></div>
+        return (
+            <div id="contacts">
+                <ul id="lista">
+                    {keys.map((key) => (<UserInfo
+                        nick={key}
+                        age={this.props.userList.get(key).age}
+                        city={this.props.userList.get(key).city}
+                    />))}
+                </ul>
+            </div>
+        );
     }
 }
 

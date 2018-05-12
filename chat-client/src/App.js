@@ -1,10 +1,10 @@
 import React from 'react';
-import { Router, Route } from 'react-router-dom';
+import { Switch, Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { history } from './helpers';
 import { PrivateRoute } from './smart/privateRoute';
-import { HomePage } from './presentational/homePageTest';
+import HomePage from './presentational/homePage';
 import { LoginPage } from './smart/loginPage';
 import { alertActions} from "./redux/actions";
 
@@ -13,30 +13,38 @@ class App extends React.Component {
         super(props);
 
         const { dispatch } = this.props;
-        history.listen((location, action) => {
-            // clear alert on location change
-            dispatch(alertActions.clear());
-        });
+
+        console.log("RE_RENDERING APP.JS");
+
+        // history.listen((location, action) => {
+        //     // clear alert on location change
+        //     dispatch(alertActions.clear());
+        // });
     }
 
     render() {
+        console.log("RENDERING APP");
         const { alert } = this.props;
         return (
-                        <Router history={history}>
-                            <div>
-                                <PrivateRoute exact path="/" component={HomePage} />
-                                <Route path="/login" component={LoginPage} />
-                            </div>
-                        </Router>
+            <div>
+                { alert.message &&
+                    <div className={`alert ${alert.type}`}> {alert.message} </div>
+                }
+                <Router history={history}>
+                    <div>
+                        <Route path="/login" component={LoginPage} />
+                        <PrivateRoute path="/" component={HomePage} />
+                    </div>
+                </Router>
+            </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    const { alert, authentication } = state;
+    const { alert } = state;
     return {
-        alert,
-        authentication
+        alert
     };
 }
 
