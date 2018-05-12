@@ -10,7 +10,7 @@ class ActiveChatsAndGroupsButton extends React.Component {
 
         return <li className="contact">
             <div className="wrap">
-                <img src="https://api.adorable.io/avatars/285/louislitt.png" alt=""/>
+                <img src={"https://api.adorable.io/avatars/285/" + getChatName() + ".png"} alt=""/>
                 <div className="meta">
                     <div onClick={this.props.dispatchUpdateActiveChat(this.props.chatType, this.props.id)}> {getChatName()}</div>
                 </div>
