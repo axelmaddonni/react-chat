@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
-import { sendPublicMessage, sendPrivateMessage, sendGroupMessage } from '../redux/actions/message'
+import { sendPublicMessageWithType, sendPrivateMessage, sendGroupMessage } from '../redux/actions/message'
 import React from 'react'
-import {chatTypes} from "../constants/ActionTypes";
+import {chatTypes, messageType} from "../constants/ActionTypes";
 
 class ChatInput extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ''};
+        this.state = {value: '', messageType: messageType.TEXT};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -15,9 +15,9 @@ class ChatInput extends React.Component {
         this.setState({value: event.target.value});
     }
 
-    handleSubmit(event) {
+    handleSubmit() {
         if (this.state.value.length > 0) {
-            dispatchSendMessage(this.props, this.state.value);
+            dispatchSendMessage(this.props, this.state.value, this.state.messageType);
         }
         this.setState({value: ''});
     }
@@ -29,7 +29,7 @@ class ChatInput extends React.Component {
                 <input
                     onKeyPress={(e) => {
                         if (e.key === 'Enter') {
-                            this.handleSubmit(e);
+                            this.handleSubmit();
                         }
                     }}
                     onChange={this.handleChange}
@@ -40,7 +40,7 @@ class ChatInput extends React.Component {
                     }}
 
                 />
-                <i className="fa fa-paperclip attachment" aria-hidden="true"/>
+                <i className="fa fa-paperclip attachment" aria-hidden="true" onClick={()=>alert(1)}/>
                 <button className="submit" onClick={this.handleSubmit}>
                     <i className="fa fa-paper-plane" aria-hidden="true"/>
                 </button>
@@ -61,7 +61,7 @@ function dispatchSendMessage(props, data) {
             props.dispatchSendGroupMessage(id, nick, data);
         } else {
             if (chatType === chatTypes.PUBLIC) {
-                props.dispatchSendPublicMessage(nick, data);
+                props.dispatchSendPublicMessage(nick, data, "messageType");
             }
         }
     }
@@ -77,7 +77,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => ({
     dispatchSendPublicMessage: (author, data) => {
-        dispatch(sendPublicMessage(author, data))
+        dispatch(sendPublicMessageWithType(author, data, "messageType"))
     },
     dispatchSendPrivateMessage: (receiver, author, data) => {
         dispatch(sendPrivateMessage(receiver, author, data))

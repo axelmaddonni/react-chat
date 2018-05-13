@@ -16,7 +16,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
   reducers,
-  applyMiddleware([sagaMiddleware, thunk])
+  applyMiddleware(sagaMiddleware, thunk)
 )
 
 store.subscribe(() => {
