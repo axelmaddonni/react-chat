@@ -34,6 +34,10 @@ function getChatName(activeChatInfo, userList, groupList) {
     let type = activeChatInfo.chatType;
     let id = activeChatInfo.id;
 
+    console.log("getChatName");
+    console.log(groupList.toJS());
+    console.log(activeChatInfo);
+
     if ( type === chatTypes.PRIVATE) {
         return id;
     } else {
@@ -62,8 +66,6 @@ function getMessages(activeChatInfo, privateChats, groupChats, publicChats) {
 
 function getPreview(activeChatInfo, privateChats, groupChats, publicChats) {
     const msgs = getMessages(activeChatInfo, privateChats, groupChats, publicChats);
-    console.log("PREVIEW");
-    console.log(msgs.toJS());
     if (! msgs.isEmpty()) {
         let lastMsg = msgs.get(-1);
         return lastMsg.author + ": " + lastMsg.data;

@@ -4,9 +4,6 @@ var path = require('path');
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 3000;
-var randomID = require("random-id");
-
-
 
 server.listen(port, () => {
     console.log('Server listening at port %d', port);
@@ -91,23 +88,29 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on("SEND_GROUP_MESSAGE", (params) => {
-        socket.to(params.groupId).emit('RECEIVE_GROUP_MESSAGE', params.author, params.data);
+        socket.to(params.groupId).emit('RECEIVE_GROUP_MESSAGE', params.groupId, params.author, params.data);
     });
 
     // Group Events
     socket.on("CREATE_GROUP", (params) => {
         const newRoomId = randomId();
+
+        console.log("NEW GROUP REQUEST");
+
+        console.log(params);
         groups.set(newRoomId, { name: params.groupName, members: params.members });
 
         socket.join(newRoomId);
 
-        for (var i = 0; i < params.members; i++) {
+        for (var i = 0; i < params.members.length; i++) {
             const nick = params.members[i];
+            console.log("MEMBER");
+            console.log(nick);
             const memberSocket = userSockets.get(nick);
+            console.log(typeof memberSocket);
             memberSocket.join(newRoomId);
             memberSocket.emit('ADD_GROUP', newRoomId, params.groupName, params.members);
         }
-        socket.emit('ADD_GROUP', newRoomId, params.groupName, params.members);
     });
 
     socket.on("EXIT_GROUP", (params) => {

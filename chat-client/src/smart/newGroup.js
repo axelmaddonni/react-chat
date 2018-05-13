@@ -42,7 +42,7 @@ class NewGroup extends React.Component {
         });
         return ( <div>
                 <div id="search">
-                    <label htmlFor=""><i className="fa fa-search" aria-hidden="true"></i></label>
+                    <label htmlFor=""><i className="fa fa-pencil" aria-hidden="true"></i></label>
                     <input type="text" placeholder="Insert group name..." onChange={this.handleChange} value={this.state.groupName}
                            ref={(node) => {
                                input = node
@@ -60,11 +60,11 @@ class NewGroup extends React.Component {
                         />))}
                     </ul>
                 </div>
-                <div className="bottom-bar">
-                    <button id="addNewGroup" onClick={dispatchAddNewGroup(this.props, this.state.groupName, this.state.members, myNick)}>
-                        <i className="fa fa-user-plus" aria-hidden="true"/>
+                <div className="accept-button" onClick={() => dispatchAddNewGroup(this.props, this.state.groupName, this.state.members, myNick)}>
+                    <a id="addNewGroup">
+                        <i className="fa fa-check-circle" aria-hidden="true"/>
                         <span> New Group </span>
-                    </button>
+                    </a>
                 </div>
             </div>
         );
@@ -78,9 +78,10 @@ function dispatchAddNewGroup(props, groupName, members, myNick) {
             selectedMembers.push(key)
         }
     });
-    selectedMembers.push(myNick);
-    props.dispatchCreateGroup(groupName, selectedMembers);
-    history.push('/chats');
+    if (selectedMembers.length > 0 && groupName !== "") {
+        selectedMembers.push(myNick);
+        props.dispatchCreateGroup(groupName, selectedMembers);
+    }
 }
 
 function mapStateToProps(state) {
@@ -92,7 +93,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => ({
     dispatchCreateGroup: (groupName, members) => {
-        dispatch(createGroup(groupName, members))
+        dispatch(createGroup(groupName, members));
+        history.push('/chats');
     }
 })
 

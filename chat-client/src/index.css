@@ -783,3 +783,19 @@ body {
     display: block;
     font-size: small;
 }
+
+.accept-button {
+    text-align: center;
+    background: #496886;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    position: absolute;
+    display: block;
+    cursor: pointer;
+    bottom: 0;
+    width: 100%
+}
+
+.accept-button:hover {
+    background: #243140;
+}

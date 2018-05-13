@@ -7,12 +7,12 @@ class ChatHeader extends React.Component {
     render() {
         return <div className="contact-profile">
             <img src={"https://api.adorable.io/avatars/285/" + getChatName(this.props.activeChatInfo, this.props.userList, this.props.groupList) + ".png"} alt=""/>
-            <p>{getChatName(this.props.activeChatInfo, this.props.userList, this.props.groupList)}</p>
+            <p>{getChatName(this.props.activeChatInfo, this.props.userList, this.props.groupList, true)}</p>
         </div>
     }
 }
 
-function getChatName(activeChatInfo, userList, groupList) {
+function getChatName(activeChatInfo, userList, groupList, withMembers = false) {
     let type = activeChatInfo.chatType;
     let id = activeChatInfo.id;
 
@@ -20,7 +20,7 @@ function getChatName(activeChatInfo, userList, groupList) {
         return id;
     } else {
         if (type === chatTypes.GROUP) {
-            return groupList.get(id).groupName;
+            return groupList.get(id).groupName.concat(withMembers ? "(" + groupList.get(id).members.join(',') + ")" : "");
         } else {
             if (type === chatTypes.PUBLIC) {
                 return publicChatName;

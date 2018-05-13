@@ -6,7 +6,7 @@ import {
     activeChatsConstants
 } from "../../constants/ActionTypes";
 
-import {Map} from "immutable";
+import { List, Map } from "immutable";
 
 const initialState = Map({});
 const groupChats = (state = initialState, action) => {
@@ -14,7 +14,7 @@ const groupChats = (state = initialState, action) => {
 
         case activeChatsConstants.ADD_ACTIVE_CHAT:
             if(action.chatType === chatType.GROUP && ! state.has(action.id)) {
-                return Map(state.set(action.id, []));
+                return Map(state.set(action.id, List([])));
             } else {
                 return state
             }
@@ -24,7 +24,7 @@ const groupChats = (state = initialState, action) => {
         case messageConstants.SEND_GROUP:
             return Map(state.set(action.groupId, state.get(action.groupId).push({author: action.author, data: action.data})));
         case groupConstants.ADD_GROUP:
-            return Map(state.set(action.groupId, []));
+            return Map(state.set(action.groupId, List([])));
         case groupConstants.EXIT_GROUP:
             return Map(state.delete(action.groupId));
         case loginConstants.LOGOUT:
