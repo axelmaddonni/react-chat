@@ -83,7 +83,11 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on("SEND_PRIVATE_MESSAGE", (params) => {
-        socket.to(userSockets.get(params.receiver)).emit('RECEIVE_PRIVATE_MESSAGE', params.author, params.data);
+        console.log(params);
+        console.log(users);
+        if (userSockets.has(params.receiver)) {
+            userSockets.get(params.receiver).emit('RECEIVE_PRIVATE_MESSAGE', params.author, params.data);
+        }
     });
 
     socket.on("SEND_GROUP_MESSAGE", (params) => {

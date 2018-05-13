@@ -10,12 +10,13 @@ import registerServiceWorker from './registerServiceWorker'
 import reducers from './redux/reducers'
 import handleNewMessage from './redux/sagas'
 import setupSocket from './redux/sockets'
+import thunk from 'redux-thunk';
 
 const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
   reducers,
-  applyMiddleware(sagaMiddleware)
+  applyMiddleware(sagaMiddleware, thunk)
 )
 
 store.subscribe(() => {

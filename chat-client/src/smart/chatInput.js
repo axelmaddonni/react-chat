@@ -1,17 +1,28 @@
 import { connect } from 'react-redux'
-import { sendPublicMessage, sendPrivateMessage, sendGroupMessage } from '../redux/actions/message'
+import { sendPublicMessageWithType, sendPrivateMessage, sendGroupMessage } from '../redux/actions/message'
 import React from 'react'
-import {chatTypes} from "../constants/ActionTypes";
+import {chatTypes, messageType} from "../constants/ActionTypes";
 
 class ChatInput extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ''};
+        this.state = {value: '', messageType: messageType.TEXT};
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
         this.setState({value: event.target.value});
+    }
+
+    handleSubmit() {
+        if (this.state.value.length > 0) {
+            dispatchSendMessage(this.props, this.state.value, this.state.messageType);
+        }
+        this.setState({value: '', messageType: messageType.TEXT});
+    }
+    handleAttachment(){
+        alert(1);
     }
 
     render() {
@@ -21,8 +32,7 @@ class ChatInput extends React.Component {
                 <input
                     onKeyPress={(e) => {
                         if (e.key === 'Enter') {
-                            dispatchSendMessage(this.props, this.state.value);
-                            this.setState({value: ''});
+                            this.handleSubmit();
                         }
                     }}
                     onChange={this.handleChange}
@@ -33,11 +43,8 @@ class ChatInput extends React.Component {
                     }}
 
                 />
-                <i className="fa fa-paperclip attachment" aria-hidden="true"/>
-                <button className="submit" onClick={() => {
-                    dispatchSendMessage(this.props, this.state.value);
-                    this.setState({value: ''});
-                }}>
+                <i className="fa fa-paperclip attachment" aria-hidden="true" onClick={this.handleAttachment}/>
+                <button className="submit" onClick={this.handleSubmit}>
                     <i className="fa fa-paper-plane" aria-hidden="true"/>
                 </button>
             </div>
@@ -45,7 +52,7 @@ class ChatInput extends React.Component {
     }
 }
 
-function dispatchSendMessage(props, data) {
+function dispatchSendMessage(props, data, messageType) {
     let chatType = props.activeChatInfo.chatType;
     let id = props.activeChatInfo.id;
     let nick = props.authentication.user.nick;
@@ -57,7 +64,7 @@ function dispatchSendMessage(props, data) {
             props.dispatchSendGroupMessage(id, nick, data);
         } else {
             if (chatType === chatTypes.PUBLIC) {
-                props.dispatchSendPublicMessage(nick, data);
+                props.dispatchSendPublicMessage(nick, data, messageType);
             }
         }
     }
@@ -72,8 +79,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => ({
-    dispatchSendPublicMessage: (author, data) => {
-        dispatch(sendPublicMessage(author, data))
+    dispatchSendPublicMessage: (author, data, messageType) => {
+        dispatch(sendPublicMessageWithType(author, data, messageType))
     },
     dispatchSendPrivateMessage: (receiver, author, data) => {
         dispatch(sendPrivateMessage(receiver, author, data))

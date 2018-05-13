@@ -38,6 +38,9 @@ const setupSocket = (dispatch) => {
 
     socket.on(messageConstants.RECEIVE_PRIVATE,
         (author, data) => {
+            console.log("RECEIVING PRIVATE");
+            console.log(author);
+            console.log(data);
             dispatch(activeChatActions.addActiveChat(chatType.PRIVATE, author));
             dispatch(messageActions.receivePrivateMessage(author, data))
         });
