@@ -494,6 +494,9 @@ body {
 #frame #sidepanel #bottom-bar button:hover {
     background: #435f7a;
 }
+#frame #sidepanel #bottom-bar button.selected {
+    background: #435f7a;
+}
 #frame #sidepanel #bottom-bar button i {
     margin-right: 3px;
     font-size: 1em;
