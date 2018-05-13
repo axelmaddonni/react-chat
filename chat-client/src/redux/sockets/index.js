@@ -21,8 +21,8 @@ const setupSocket = (dispatch) => {
 
     socket.on(userConstants.ADD_USER, (user) => {
         dispatch(userActions.addUser(user.nick, user.age, user.city));
-        // dispatch(messageActions.receivePrivateMessage(user.nick, "Hola"));
-        // dispatch(activeChatActions.updateActiveChat("PRIVATE", user.nick));
+        dispatch(messageActions.receivePrivateMessage(user.nick, "Hola"));
+        dispatch(activeChatActions.updateActiveChat("PRIVATE", user.nick));
     });
     socket.on(userConstants.DELETE_USER, (nick) => dispatch(userActions.deleteUser(nick)));
 

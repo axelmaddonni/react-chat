@@ -36,7 +36,8 @@ export const messageConstants = {
 export const activeChatsConstants = {
     UPDATE_ACTIVE_CHAT: 'UPDATE_ACTIVE_CHAT',
     ADD_ACTIVE_CHAT: 'ADD_ACTIVE_CHAT',
-    DELETE_ACTIVE_CHAT: 'DELETE_ACTIVE_CHAT'
+    DELETE_ACTIVE_CHAT: 'DELETE_ACTIVE_CHAT',
+    RECEIVE_PRIVATE: 'RECEIVE_PRIVATE_MESSAGE'
 };
 
 export const chatTypes = {

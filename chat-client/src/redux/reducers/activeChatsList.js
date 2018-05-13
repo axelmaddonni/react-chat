@@ -13,8 +13,19 @@ const activeChatList = (state = initialState, action) => {
                 }
                 return list;
             });
-        case loginConstants.LOGOUT:
-            return [];
+            break;
+        case activeChatsConstants.RECEIVE_PRIVATE:
+            console.log("AAHDVBJADHVB");
+            let esta = false;
+            state.forEach(function(activeChatInfo) {
+                if((chatTypes.PRIVATE === activeChatInfo.chatType) && (action.author === activeChatInfo.id)){
+                    esta = true;
+                }
+            });
+            if (!esta) {
+                return state.concat([{chatType: chatTypes.PRIVATE, id: action.author}]);
+            }
+            break;
         default:
             return state
     }

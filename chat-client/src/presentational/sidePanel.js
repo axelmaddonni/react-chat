@@ -15,12 +15,13 @@ class SidePanel extends React.Component {
         return (
             <div id="sidepanel">
                 <HomeHeader/>
-                <Switch>
-                    <Route path='chats' component={ActiveChatsAndGroups}/>
-                    <Route path='agenda' component={Agenda}/>
-                    <Route path='newGroup' component={Agenda}/>
-                    <Route component={Agenda}/>
-                </Switch>
+                <ActiveChatsAndGroups/>
+                {/*<Switch>*/}
+                    {/*<Route path='chats' component={ActiveChatsAndGroups}/>*/}
+                    {/*<Route path='agenda' component={Agenda}/>*/}
+                    {/*<Route path='newGroup' component={Agenda}/>*/}
+                    {/*<Route component={Agenda}/>*/}
+                {/*</Switch>*/}
             </div>
         )
     }

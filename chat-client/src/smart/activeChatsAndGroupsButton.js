@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import {updateActiveChat} from "../redux/actions/activeChat";
 import {chatTypes, publicChatName} from "../constants/ActionTypes";
+import '../index.css';
 
 class ActiveChatsAndGroupsButton extends React.Component {
 
@@ -10,27 +11,27 @@ class ActiveChatsAndGroupsButton extends React.Component {
 
         return <li className="contact">
             <div className="wrap">
-                <img src={"https://api.adorable.io/avatars/285/" + getChatName() + ".png"} alt=""/>
+                <img src={"https://api.adorable.io/avatars/285/" + getChatName(this.props.info.chatType, this.props.info.id, this.props.userList, this.props.groupList) + ".png"} alt=""/>
                 <div className="meta">
-                    <div onClick={this.props.dispatchUpdateActiveChat(this.props.chatType, this.props.id)}> {getChatName()}</div>
+                    <p className="chatName">{getChatName(this.props.info.chatType, this.props.info.id, this.props.userList, this.props.groupList)}</p>
+                    <p className="preview"> </p>
                 </div>
             </div>
         </li>
+            //onClick={this.props.dispatchUpdateActiveChat()}
     }
 }
 
-function getChatName() {
-
-    let type = this.props.chatType;
-    let id = this.props.id;
+function getChatName(type, id, userList, groupList) {
 
     if ( type === chatTypes.PRIVATE) {
-        return this.props.userList.get(id);
+        return userList.get(id);
     } else {
         if (type === chatTypes.GROUP) {
-            return this.props.groupList.get(id);
+            return groupList.get(id);
         } else {
             if (type === chatTypes.PUBLIC) {
+                console.log("TIPO PUBLIC");
                 return publicChatName;
             }
         }
@@ -38,7 +39,7 @@ function getChatName() {
 }
 
 ActiveChatsAndGroupsButton.propTypes = {
-    id: PropTypes.string.isRequired
+    info: PropTypes.shape({chatType: PropTypes.string.isRequired, id: PropTypes.string}).isRequired
 }
 
 function mapStateToProps(state) {
