@@ -19,7 +19,10 @@ class ChatInput extends React.Component {
         if (this.state.value.length > 0) {
             dispatchSendMessage(this.props, this.state.value, this.state.messageType);
         }
-        this.setState({value: ''});
+        this.setState({value: '', messageType: messageType.TEXT});
+    }
+    handleAttachment(){
+        alert(1);
     }
 
     render() {
@@ -40,7 +43,7 @@ class ChatInput extends React.Component {
                     }}
 
                 />
-                <i className="fa fa-paperclip attachment" aria-hidden="true" onClick={()=>alert(1)}/>
+                <i className="fa fa-paperclip attachment" aria-hidden="true" onClick={this.handleAttachment}/>
                 <button className="submit" onClick={this.handleSubmit}>
                     <i className="fa fa-paper-plane" aria-hidden="true"/>
                 </button>
@@ -49,7 +52,7 @@ class ChatInput extends React.Component {
     }
 }
 
-function dispatchSendMessage(props, data) {
+function dispatchSendMessage(props, data, messageType) {
     let chatType = props.activeChatInfo.chatType;
     let id = props.activeChatInfo.id;
     let nick = props.authentication.user.nick;
@@ -61,7 +64,7 @@ function dispatchSendMessage(props, data) {
             props.dispatchSendGroupMessage(id, nick, data);
         } else {
             if (chatType === chatTypes.PUBLIC) {
-                props.dispatchSendPublicMessage(nick, data, "messageType");
+                props.dispatchSendPublicMessage(nick, data, messageType);
             }
         }
     }
@@ -76,8 +79,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => ({
-    dispatchSendPublicMessage: (author, data) => {
-        dispatch(sendPublicMessageWithType(author, data, "messageType"))
+    dispatchSendPublicMessage: (author, data, messageType) => {
+        dispatch(sendPublicMessageWithType(author, data, messageType))
     },
     dispatchSendPrivateMessage: (receiver, author, data) => {
         dispatch(sendPrivateMessage(receiver, author, data))
