@@ -6,10 +6,13 @@ import '../index.css';
 class Agenda extends React.Component {
 
     render() {
-        console.log(this.props.userList);
-
-        let keys = new Array();
-        this.props.userList.forEach((value, key) => keys.push(key));
+        let myNick = JSON.parse(sessionStorage.getItem('user')).nick;
+        let keys = [];
+        this.props.userList.forEach((value, key) => {
+            if (key !== myNick) {
+                keys.push(key)
+            }
+        });
         return (
             <div id="contacts">
                 <ul id="lista">

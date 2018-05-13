@@ -6,7 +6,7 @@ import { ActiveChatsAndGroups } from "../smart/activeChatsAndGroups";
 import { Agenda } from "../smart/agenda";
 
 import '../index.css';
-import { history } from "../helpers";
+import Profile from "./profile";
 
 class SidePanel extends React.Component {
 
@@ -14,6 +14,7 @@ class SidePanel extends React.Component {
         return (
             <div id="sidepanel">
                 <HomeHeader/>
+                <Profile/>
                 <Switch>
                     <Route path='/chats' component={ActiveChatsAndGroups}/>
                     <Route path='/agenda' component={Agenda}/>

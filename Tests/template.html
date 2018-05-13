@@ -1,3 +1,5 @@
+<!--https://bootsnipp.com/snippets/0e3Ma-->
+
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -61,7 +63,8 @@
     }
     #frame #sidepanel #profile {
         width: 80%;
-        margin: 25px auto;
+        margin: 10px auto;
+        margin-top: 50px;
     }
     @media screen and (max-width: 735px) {
         #frame #sidepanel #profile {
@@ -343,7 +346,6 @@
         height: 100%;
         overflow-y: scroll;
         overflow-x: hidden;
-        margin-top: 33px;
     }
     @media screen and (max-width: 735px) {
         #frame #sidepanel #contacts {
@@ -700,6 +702,16 @@ Website: http://emilcarlsson.se/
 
 <div id="frame">
     <div id="sidepanel">
+        <div id="profile">
+            <div class="wrap">
+                <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+                <p>Mike Ross</p>
+                <div class="meta">
+                    <p class="name">Age</p>
+                    <p class="name">City</p>
+                </div>
+            </div>
+        </div>
         <div id="bottom-bar">
             <button id="agenda"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Agenda</span></button>
             <button id="chats"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Chats</span></button>

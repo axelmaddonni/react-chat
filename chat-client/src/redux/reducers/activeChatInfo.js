@@ -6,6 +6,10 @@ const activeChatInfo = (state = initialState, action) => {
     switch (action.type) {
         case activeChatsConstants.UPDATE_ACTIVE_CHAT:
             return { chatType: action.chatType, id: action.id };
+        case activeChatsConstants.DELETE_ACTIVE_CHAT:
+            if (action.chatType === state.chatType && action.id === state.id) {
+                return initialState;
+            }
         case loginConstants.LOGOUT:
             return initialState;
         default:
