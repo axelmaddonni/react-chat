@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { sendPublicMessage, sendPrivateMessage, sendGroupMessage } from '../redux/actions/message'
+import { sendPublicMessageWithType, sendPrivateMessage, sendGroupMessage } from '../redux/actions/message'
 import React from 'react'
 import {chatTypes} from "../constants/ActionTypes";
 
@@ -21,7 +21,7 @@ class ChatInput extends React.Component {
                 <input
                     onKeyPress={(e) => {
                         if (e.key === 'Enter') {
-                            dispatchSendMessage(this.props, this.state.value);
+                            dispatchSendMessage(this.props, this.state.value, messageType);
                             this.setState({value: ''});
                         }
                     }}
@@ -57,7 +57,7 @@ function dispatchSendMessage(props, data) {
             props.dispatchSendGroupMessage(id, nick, data);
         } else {
             if (chatType === chatTypes.PUBLIC) {
-                props.dispatchSendPublicMessage(nick, data);
+                props.dispatchSendPublicMessage(nick, data, messageType);
             }
         }
     }
@@ -73,7 +73,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => ({
     dispatchSendPublicMessage: (author, data) => {
-        dispatch(sendPublicMessage(author, data))
+        dispatch(sendPublicMessageWithType(author, data, messageType))
     },
     dispatchSendPrivateMessage: (receiver, author, data) => {
         dispatch(sendPrivateMessage(receiver, author, data))
