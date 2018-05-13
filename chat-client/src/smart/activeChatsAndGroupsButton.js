@@ -23,7 +23,7 @@ class ActiveChatsAndGroupsButton extends React.Component {
                     <p className="chatName">{getChatName(this.props.info, this.props.userList, this.props.groupList)}
                         { this.props.info.chatType !== chatTypes.PUBLIC ? this.getCloseIcon() : '' }
                     </p>
-                    <p className="preview"> </p>
+                    <p className="preview">{getPreview(this.props.info, this.props.privateChats, this.props.groupChats, this.props.publicChats)}</p>
                 </div>
             </div>
         </li>
@@ -47,28 +47,54 @@ function getChatName(activeChatInfo, userList, groupList) {
     }
 }
 
+function getMessages(activeChatInfo, privateChats, groupChats, publicChats) {
+    const chatType = activeChatInfo.chatType;
+    const id = activeChatInfo.id;
+
+    if (chatType === chatTypes.PUBLIC) {
+        return publicChats;
+    } else if (chatType === chatTypes.PRIVATE) {
+        return privateChats.get(id);
+    } else if (chatType === chatTypes.GROUP) {
+        return groupChats.get(id);
+    }
+}
+
+function getPreview(activeChatInfo, privateChats, groupChats, publicChats) {
+    const msgs = getMessages(activeChatInfo, privateChats, groupChats, publicChats);
+    console.log("PREVIEW");
+    console.log(msgs.toJS());
+    if (! msgs.isEmpty()) {
+        let lastMsg = msgs.get(-1);
+        return lastMsg.author + ": " + lastMsg.data;
+    } else {
+        return "";
+    }
+}
+
 ActiveChatsAndGroupsButton.propTypes = {
     info: PropTypes.shape({chatType: PropTypes.string.isRequired, id: PropTypes.string}).isRequired
 }
 
 function mapStateToProps(state) {
-    const { userList, groupList} = state;
+    const { userList, groupList, privateChats, groupChats, publicChats } = state;
     return {
         userList,
-        groupList
+        groupList,
+        privateChats,
+        groupChats,
+        publicChats
     };
 }
 
 const mapDispatchToProps = dispatch => ({
     dispatchUpdateActiveChat: (chatType, id) => {
-        console.log('update');
         dispatch(updateActiveChat(chatType, id))
     },
     closeChat: (chatInfo) => {
-        console.log("close");
         dispatch(deleteActiveChat(chatInfo.chatType, chatInfo.id));
     }
-})
+});
 
 const connected = connect(mapStateToProps, mapDispatchToProps)(ActiveChatsAndGroupsButton);
 export { connected as ActiveChatsAndGroupsButton };

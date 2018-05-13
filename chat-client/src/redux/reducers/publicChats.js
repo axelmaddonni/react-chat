@@ -1,13 +1,15 @@
 import { messageConstants, loginConstants} from "../../constants/ActionTypes";
 
-const publicChats = (state = [], action) => {
+import { List } from "immutable";
+
+const publicChats = (state = List([]), action) => {
     switch (action.type) {
         case messageConstants.SEND_PUBLIC:
-            return state.concat([{author: action.author, data: action.data}]);
+            return state.push({author: action.author, data: action.data});
         case messageConstants.RECEIVE_PUBLIC:
-            return state.concat([{author: action.author, data: action.data}]);
+            return state.push({author: action.author, data: action.data});
         case loginConstants.LOGOUT:
-            return [];
+            return List([]);
         default:
             return state
     }

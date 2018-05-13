@@ -8,6 +8,7 @@ class ChatMessages extends React.Component {
     render() {
 
         let messages = getMessages(this.props.activeChatInfo, this.props.privateChats, this.props.groupChats, this.props.publicChats);
+        console.log(messages);
 
         return <div className="messages">
             <ul>
@@ -20,25 +21,25 @@ class ChatMessages extends React.Component {
             </ul>
         </div>
     }
+
+    componentDidUpdate() {
+        let lastMsg = document.querySelector(".messages li:last-child");
+        if (lastMsg != null) {
+            lastMsg.scrollIntoView();
+        }
+    }
 }
 
 function getMessages(activeChatInfo, privateChats, groupChats, publicChats) {
+    const chatType = activeChatInfo.chatType;
+    const id = activeChatInfo.id;
 
-    let chatType = activeChatInfo.chatType;
-    let id = activeChatInfo.id;
-
-    if ( chatType=== chatTypes.PRIVATE) {
+    if (chatType === chatTypes.PUBLIC) {
+        return publicChats;
+    } else if (chatType === chatTypes.PRIVATE) {
         return privateChats.get(id);
-    } else {
-        if (chatType === chatTypes.GROUP) {
-            return groupChats.get(id);
-        } else {
-            if (chatType === chatTypes.PUBLIC) {
-                return publicChats;
-            } else {
-                return [{data: "Mensaje Default", author:"Manu"}];
-            }
-        }
+    } else if (chatType === chatTypes.GROUP) {
+        return groupChats.get(id);
     }
 }
 

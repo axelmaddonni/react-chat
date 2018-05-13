@@ -6,7 +6,8 @@ import {
     activeChatsConstants
 } from "../../constants/ActionTypes";
 
-const { Map } = require('immutable');
+import {Map} from "immutable";
+
 const initialState = Map({});
 const groupChats = (state = initialState, action) => {
     switch (action.type) {
