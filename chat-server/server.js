@@ -19,6 +19,11 @@ var userSockets = new Map(); // maps nick to socket id
 
 const PUBLIC_ROOM = 'all';
 
+function printState() {
+    console.log(users);
+    console.log(groups);
+}
+
 io.sockets.on('connection', function (socket) {
 
     // User Events
@@ -27,18 +32,12 @@ io.sockets.on('connection', function (socket) {
         const username = user.nick;
 
         console.log("Login Request from " + username);
-        console.log(users);
 
         if (users.has(username)) {
             socket.emit("LOGIN_ERROR", "Invalid nick");
             console.log("ERROR: " + username);
 
         } else {
-            // TODO: echo to client they've connected
-            // socket.emit('updatechat', 'SERVER', 'you have connected');
-            // TODO: echo globally (all clients) that a person has connected
-            // socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected: ' + socket.id);
-
             socket.username = username;
             users.set(username, { age: user.age, city: user.city });
             userSockets.set(username, socket);
@@ -49,15 +48,19 @@ io.sockets.on('connection', function (socket) {
             socket.to(PUBLIC_ROOM).emit("ADD_USER", user);
             console.log("JOINED: " + username);
         }
+
+        printState();
     });
 
     socket.on("LOGOUT", () => logout(socket));
     socket.on('disconnect', () => logout(socket));
 
     function logout(socket) {
+        console.log("Logout Request from " + socket.username);
+
         if (users.has(socket.username)) {
-            delete users[socket.username];
-            delete userSockets[socket.username];
+            users.delete(socket.username);
+            userSockets.delete(socket.username);
 
             socket.to(PUBLIC_ROOM).emit("DELETE_USER", socket.username);
 
@@ -67,6 +70,8 @@ io.sockets.on('connection', function (socket) {
             var rooms = roomKeys.splice( socketIdIndex, 1 );
             rooms.forEach((room) => socket.leave(room));
         }
+
+        printState();
     };
 
     // Message events
