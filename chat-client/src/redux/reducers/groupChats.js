@@ -1,9 +1,23 @@
-import { groupConstants, messageConstants, loginConstants } from "../../constants/ActionTypes";
+import {
+    groupConstants,
+    messageConstants,
+    loginConstants,
+    chatTypes as chatType,
+    activeChatsConstants
+} from "../../constants/ActionTypes";
 
 const { Map } = require('immutable');
 const initialState = Map({});
 const groupChats = (state = initialState, action) => {
     switch (action.type) {
+
+        case activeChatsConstants.ADD_ACTIVE_CHAT:
+            if(action.chatType === chatType.GROUP && ! state.has(action.id)) {
+                return Map(state.set(action.id, []));
+            } else {
+                return state
+            }
+
         case messageConstants.RECEIVE_GROUP:
             return Map(state.set(action.groupId, state.get(action.groupId).push({author: action.author, data: action.data})));
         case messageConstants.SEND_GROUP:

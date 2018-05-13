@@ -11,17 +11,15 @@ import { history } from "../helpers";
 class SidePanel extends React.Component {
 
     render() {
-        console.log("RENDERING SIDE PANEL");
         return (
             <div id="sidepanel">
                 <HomeHeader/>
-                <ActiveChatsAndGroups/>
-                {/*<Switch>*/}
-                    {/*<Route path='chats' component={ActiveChatsAndGroups}/>*/}
-                    {/*<Route path='agenda' component={Agenda}/>*/}
-                    {/*<Route path='newGroup' component={Agenda}/>*/}
-                    {/*<Route component={Agenda}/>*/}
-                {/*</Switch>*/}
+                <Switch>
+                    <Route path='/chats' component={ActiveChatsAndGroups}/>
+                    <Route path='/agenda' component={Agenda}/>
+                    <Route path='/newGroup' component={Agenda}/>
+                    <Route component={Agenda}/>
+                </Switch>
             </div>
         )
     }

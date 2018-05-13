@@ -6,7 +6,7 @@ import {ChatHeader} from '../smart/chatHeader'
 class ActiveChat extends React.Component {
 
     render() {
-        return <div class="content">
+        return <div className="content">
             <ChatHeader/>
             <ChatMessages/>
             <ChatInput/>

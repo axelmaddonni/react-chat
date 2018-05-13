@@ -9,8 +9,8 @@ class ChatInput extends React.Component {
         let input;
         let data;
 
-        return <div class="message-input">
-            <div class="wrap">
+        return <div className="message-input">
+            <div className="wrap">
                 <input
                     onKeyPress={(e) => {
                         if (e.key === 'Enter') {
@@ -26,7 +26,7 @@ class ChatInput extends React.Component {
                     }}
 
                 />
-                <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+                <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
                 {/*TODO ver que hacer con este boton*/}
             </div>
         </div>

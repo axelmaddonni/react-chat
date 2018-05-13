@@ -1,6 +1,12 @@
 import io from "socket.io-client"
 
-import { loginConstants, userConstants, groupConstants, messageConstants } from "../../constants/ActionTypes";
+import {
+    loginConstants,
+    userConstants,
+    groupConstants,
+    messageConstants,
+    chatTypes as chatType
+} from "../../constants/ActionTypes";
 import { userActions, alertActions, loginActions, messageActions, groupActions, activeChatActions  } from "../actions";
 import {history} from "../../helpers";
 
@@ -19,11 +25,7 @@ const setupSocket = (dispatch) => {
         dispatch(loginActions.loginError(error))
     });
 
-    socket.on(userConstants.ADD_USER, (user) => {
-        dispatch(userActions.addUser(user.nick, user.age, user.city));
-        dispatch(messageActions.receivePrivateMessage(user.nick, "Hola"));
-        dispatch(activeChatActions.updateActiveChat("PRIVATE", user.nick));
-    });
+    socket.on(userConstants.ADD_USER, (user) => dispatch(userActions.addUser(user.nick, user.age, user.city)));
     socket.on(userConstants.DELETE_USER, (nick) => dispatch(userActions.deleteUser(nick)));
 
     socket.on(userConstants.POPULATE_USER_LIST, (userList) => {
@@ -35,13 +37,19 @@ const setupSocket = (dispatch) => {
     socket.on(groupConstants.DELETE_MEMBER_GROUP, (groupId, nick) => dispatch(groupActions.deleteMemberGroup(groupId, nick)));
 
     socket.on(messageConstants.RECEIVE_PRIVATE,
-        (author, data) => dispatch(messageActions.receivePrivateMessage(author, data)));
+        (author, data) => {
+            dispatch(activeChatActions.addActiveChat(chatType.PRIVATE, author));
+            dispatch(messageActions.receivePrivateMessage(author, data))
+        });
 
     socket.on(messageConstants.RECEIVE_PUBLIC,
         (author, data) => dispatch(messageActions.receivePublicMessage(author, data)));
 
     socket.on(messageConstants.RECEIVE_GROUP,
-        (groupId, author, data) => dispatch(messageActions.receiveGroupMessage(groupId, author, data)));
+        (groupId, author, data) => {
+            dispatch(activeChatActions.addActiveChat(chatType.GROUP, groupId));
+            dispatch(messageActions.receiveGroupMessage(groupId, author, data))
+        });
 
     return socket
 };

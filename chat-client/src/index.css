@@ -738,3 +738,7 @@ body {
     margin: 10px 10px 10px 1px;
     opacity: .5;
 }
+
+.-float-right {
+    float:right;
+}

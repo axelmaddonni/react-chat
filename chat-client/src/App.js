@@ -11,19 +11,14 @@ import { alertActions} from "./redux/actions";
 class App extends React.Component {
     constructor(props) {
         super(props);
-
         const { dispatch } = this.props;
-
-        console.log("RE_RENDERING APP.JS");
-
-        // history.listen((location, action) => {
-        //     // clear alert on location change
-        //     dispatch(alertActions.clear());
-        // });
+        history.listen((location, action) => {
+            // clear alert on location change
+            dispatch(alertActions.clear());
+        });
     }
 
     render() {
-        console.log("RENDERING APP");
         const { alert } = this.props;
         return (
             <div>

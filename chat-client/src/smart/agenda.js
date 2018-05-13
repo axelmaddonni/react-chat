@@ -1,19 +1,20 @@
 import React from 'react'
-import UserInfo from '../presentational/userInfo'
+import {UserInfo} from './userInfo'
 import { connect } from 'react-redux';
 import '../index.css';
 
 class Agenda extends React.Component {
 
     render() {
+        console.log(this.props.userList);
+
         let keys = new Array();
         this.props.userList.forEach((value, key) => keys.push(key));
-        console.log("KEYS:");
-        console.log(keys);
         return (
             <div id="contacts">
                 <ul id="lista">
                     {keys.map((key) => (<UserInfo
+                        key={key}
                         nick={key}
                         age={this.props.userList.get(key).age}
                         city={this.props.userList.get(key).city}

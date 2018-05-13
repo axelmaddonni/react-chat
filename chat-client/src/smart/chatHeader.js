@@ -5,23 +5,22 @@ import '../index.css';
 
 class ChatHeader extends React.Component {
     render() {
-        return <div class="contact-profile">
-            <img src="https://api.adorable.io/avatars/285/harveyspecter.png" alt=""/>
+        return <div className="contact-profile">
+            <img src={"https://api.adorable.io/avatars/285/" + getChatName(this.props.activeChatInfo, this.props.userList, this.props.groupList) + ".png"} alt=""/>
             <p>{getChatName(this.props.activeChatInfo, this.props.userList, this.props.groupList)}</p>
         </div>
     }
 }
 
 function getChatName(activeChatInfo, userList, groupList) {
-
     let type = activeChatInfo.chatType;
     let id = activeChatInfo.id;
 
     if ( type === chatTypes.PRIVATE) {
-        return userList.get(id);
+        return id;
     } else {
         if (type === chatTypes.GROUP) {
-            return groupList.get(id);
+            return groupList.get(id).groupName;
         } else {
             if (type === chatTypes.PUBLIC) {
                 return publicChatName;

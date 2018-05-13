@@ -1,37 +1,46 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
-import {updateActiveChat} from "../redux/actions/activeChat";
+import {deleteActiveChat, updateActiveChat} from "../redux/actions/activeChat";
 import {chatTypes, publicChatName} from "../constants/ActionTypes";
 import '../index.css';
 
 class ActiveChatsAndGroupsButton extends React.Component {
 
-    render() {
+    getCloseIcon = () => (
+        <i className="fa fa-times-circle -float-right" onClick={(e) => {
+            e.stopPropagation();
+            this.props.closeChat(this.props.info);
+        }}/>
+    )
 
-        return <li className="contact">
+    render() {
+        return <li className="contact"
+                   onClick={() => this.props.dispatchUpdateActiveChat(this.props.info.chatType, this.props.info.id)}>
             <div className="wrap">
-                <img src={"https://api.adorable.io/avatars/285/" + getChatName(this.props.info.chatType, this.props.info.id, this.props.userList, this.props.groupList) + ".png"} alt=""/>
+                <img src={"https://api.adorable.io/avatars/285/" + getChatName(this.props.info, this.props.userList, this.props.groupList) + ".png"} alt=""/>
                 <div className="meta">
-                    <p className="chatName">{getChatName(this.props.info.chatType, this.props.info.id, this.props.userList, this.props.groupList)}</p>
+                    <p className="chatName">{getChatName(this.props.info, this.props.userList, this.props.groupList)}
+                        { this.props.info.chatType !== chatTypes.PUBLIC ? this.getCloseIcon() : '' }
+                    </p>
                     <p className="preview"> </p>
                 </div>
             </div>
         </li>
-            //onClick={this.props.dispatchUpdateActiveChat()}
     }
 }
 
-function getChatName(type, id, userList, groupList) {
+function getChatName(activeChatInfo, userList, groupList) {
+    let type = activeChatInfo.chatType;
+    let id = activeChatInfo.id;
 
     if ( type === chatTypes.PRIVATE) {
-        return userList.get(id);
+        return id;
     } else {
         if (type === chatTypes.GROUP) {
-            return groupList.get(id);
+            return groupList.get(id).groupName;
         } else {
             if (type === chatTypes.PUBLIC) {
-                console.log("TIPO PUBLIC");
                 return publicChatName;
             }
         }
@@ -52,7 +61,12 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => ({
     dispatchUpdateActiveChat: (chatType, id) => {
+        console.log('update');
         dispatch(updateActiveChat(chatType, id))
+    },
+    closeChat: (chatInfo) => {
+        console.log("close");
+        dispatch(deleteActiveChat(chatInfo.chatType, chatInfo.id));
     }
 })
 

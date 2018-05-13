@@ -9,7 +9,7 @@ class ChatMessages extends React.Component {
 
         let messages = getMessages(this.props.activeChatInfo, this.props.privateChats, this.props.groupChats, this.props.publicChats);
 
-        return <div class="messages">
+        return <div className="messages">
             <ul>
                 {messages.map(message => (
                     <ChatMessage
