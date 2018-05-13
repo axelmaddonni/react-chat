@@ -33,7 +33,7 @@ const setupSocket = (dispatch) => {
         dispatch(userActions.populateUserList(new Map(userList)))
     });
 
-    socket.on(groupConstants.CREATE_GROUP, (groupId, name, members) => dispatch(groupActions.createGroup(groupId, name, members)));
+    socket.on(groupConstants.ADD_GROUP, (groupId, name, members) => dispatch(groupActions.addGroup(groupId, name, members)));
     socket.on(groupConstants.DELETE_MEMBER_GROUP, (groupId, nick) => dispatch(groupActions.deleteMemberGroup(groupId, nick)));
 
     socket.on(messageConstants.RECEIVE_PRIVATE,

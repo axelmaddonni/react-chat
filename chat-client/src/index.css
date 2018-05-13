@@ -733,6 +733,33 @@ body {
     -webkit-transition: 1s all ease;
     transition: 1s all ease;
 }
+
+#frame #sidepanel #contacts ul li.contact.selected .wrap .meta {
+    padding: 5px 0 0 0;
+}
+@media screen and (max-width: 735px) {
+    #frame #sidepanel #contacts ul li.contact.selected .wrap .meta {
+        display: none;
+    }
+}
+#frame #sidepanel #contacts ul li.contact.selected .wrap .meta .chatName {
+    margin: 5px 0 0 0;
+    padding: 0 0 1px;
+    font-weight: 900;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -moz-transition: 1s all ease;
+    -o-transition: 1s all ease;
+    -webkit-transition: 1s all ease;
+    transition: 1s all ease;
+}
+
+
+#frame #sidepanel #contacts ul li.contact.selected {
+    background: #435f7a;
+}
+
 #frame #sidepanel #contacts ul li.contact .wrap .meta .chatName span {
     position: initial;
     border-radius: initial;
