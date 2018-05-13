@@ -632,7 +632,7 @@ body {
     font-family: "proxima-nova",  "Source Sans Pro", sans-serif;
     float: left;
     border: none;
-    width: calc(100%);
+    width: calc(100% - 90px);
     padding: 11px 32px 10px 8px;
     font-size: 0.8em;
     color: #32465a;
@@ -647,7 +647,7 @@ body {
 }
 #frame .content .message-input .wrap .attachment {
     position: absolute;
-    right: 10px;
+    right: 60px;
     z-index: 4;
     margin-top: 10px;
     font-size: 1.1em;

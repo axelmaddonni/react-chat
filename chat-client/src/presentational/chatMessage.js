@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 
 class ChatMessage extends React.Component {
     render() {
-        return (<li class="sent">
-            <img src="https://api.adorable.io/avatars/285/harveyspecter.png" alt="" />
+        let myNick = JSON.parse(sessionStorage.getItem('user')).nick;
+        return (<li class={this.props.author === myNick ? "replies" : "sent"}>
+            <img src={"https://api.adorable.io/avatars/285/" + this.props.author + ".png"} alt="" />
                 <p> {this.props.author}: {this.props.data}</p>
             </li>)
     }

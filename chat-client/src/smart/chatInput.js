@@ -4,39 +4,48 @@ import React from 'react'
 import {chatTypes} from "../constants/ActionTypes";
 
 class ChatInput extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {value: ''};
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
 
     render() {
         let input;
-        let data;
-
         return <div className="message-input">
             <div className="wrap">
                 <input
                     onKeyPress={(e) => {
                         if (e.key === 'Enter') {
-                            dispatchSendMessage(this.props, input.value);
-                            input.value = '';
-                        } else {
-                            data = input.value;
+                            dispatchSendMessage(this.props, this.state.value);
+                            this.setState({value: ''});
                         }
                     }}
+                    onChange={this.handleChange}
                     type="text"
+                    value={this.state.value}
                     ref={(node) => {
                         input = node
                     }}
 
                 />
-                <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
-                {/*TODO ver que hacer con este boton*/}
+                <i className="fa fa-paperclip attachment" aria-hidden="true"/>
+                <button className="submit" onClick={() => {
+                    dispatchSendMessage(this.props, this.state.value);
+                    this.setState({value: ''});
+                }}>
+                    <i className="fa fa-paper-plane" aria-hidden="true"/>
+                </button>
             </div>
         </div>
     }
 }
 
 function dispatchSendMessage(props, data) {
-    console.log("Data:");
-    console.log(data);
-
     let chatType = props.activeChatInfo.chatType;
     let id = props.activeChatInfo.id;
     let nick = props.authentication.user.nick;
