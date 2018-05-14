@@ -80,8 +80,6 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on("SEND_PRIVATE_MESSAGE", (params) => {
-        console.log(params);
-        console.log(users);
         if (userSockets.has(params.receiver)) {
             userSockets.get(params.receiver).emit('RECEIVE_PRIVATE_MESSAGE', params.author, params.data);
         }
@@ -94,20 +92,12 @@ io.sockets.on('connection', function (socket) {
     // Group Events
     socket.on("CREATE_GROUP", (params) => {
         const newRoomId = randomId();
-
-        console.log("NEW GROUP REQUEST");
-
-        console.log(params);
         groups.set(newRoomId, { name: params.groupName, members: params.members });
-
         socket.join(newRoomId);
 
         for (var i = 0; i < params.members.length; i++) {
             const nick = params.members[i];
-            console.log("MEMBER");
-            console.log(nick);
             const memberSocket = userSockets.get(nick);
-            console.log(typeof memberSocket);
             memberSocket.join(newRoomId);
             memberSocket.emit('ADD_GROUP', newRoomId, params.groupName, params.members);
         }
@@ -119,6 +109,6 @@ io.sockets.on('connection', function (socket) {
     });
 
     function randomId() {
-        return 5;
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     }
 });
