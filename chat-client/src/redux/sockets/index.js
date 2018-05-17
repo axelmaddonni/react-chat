@@ -12,7 +12,7 @@ chatTypes
 } from "../../constants";
 
 const setupSocket = (dispatch) => {
-    const socket = io.connect("localhost:3000");
+    const socket = io.connect("localhost:3001");
 
     socket.on(loginConstants.LOGIN_OK, (user) => {
         dispatch(alertActions.clear());
