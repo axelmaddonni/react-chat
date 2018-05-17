@@ -1,4 +1,4 @@
-import { messageConstants } from "../../constants/ActionTypes";
+import { messageConstants } from "../../constants/index";
 
 export const sendPublicMessage = (author, data) => ({
     type: messageConstants.SEND_PUBLIC,

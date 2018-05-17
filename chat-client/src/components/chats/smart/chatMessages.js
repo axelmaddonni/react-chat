@@ -1,14 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {ChatMessage} from '../presentational/chatMessage'
-import {chatTypes} from "../constants/ActionTypes";
+import { ChatMessage } from '../presentational/chatMessage'
+import { chatTypes } from "../../../constants/index";
 
 class ChatMessages extends React.Component {
 
     render() {
 
         let messages = getMessages(this.props.activeChatInfo, this.props.privateChats, this.props.groupChats, this.props.publicChats);
-        console.log(messages);
 
         return <div className="messages">
             <ul>

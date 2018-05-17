@@ -1,4 +1,4 @@
-import { alertConstants } from '../../constants/ActionTypes';
+import { alertConstants } from '../../constants/index';
 
 export function success(message) {
     return { type: alertConstants.SUCCESS, message };

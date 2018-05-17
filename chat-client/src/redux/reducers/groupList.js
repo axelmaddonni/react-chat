@@ -1,4 +1,4 @@
-import { groupConstants, loginConstants } from "../../constants/ActionTypes";
+import { groupConstants, loginConstants } from "../../constants/index";
 
 const { Map } = require('immutable');
 const initialState = Map({});

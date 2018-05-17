@@ -1,19 +1,17 @@
 import React from 'react';
-import { Switch, Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import { history } from './helpers';
-import { PrivateRoute } from './smart/privateRoute';
-import HomePage from './presentational/homePage';
-import { LoginPage } from './smart/loginPage';
-import { alertActions} from "./redux/actions";
+import { Switch, Router, Route } from 'react-router-dom';
+import HomePage from '../presentational/homePage';
+import { history } from '../../../helpers/index';
+import { LoginPage } from './loginPage';
+import { alertActions} from "../../../redux/actions/index";
+import { PrivateRoute } from './privateRoute';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         const { dispatch } = this.props;
         history.listen((location, action) => {
-            // clear alert on location change
             dispatch(alertActions.clear());
         });
     }

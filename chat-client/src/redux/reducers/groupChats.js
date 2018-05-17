@@ -4,7 +4,7 @@ import {
     loginConstants,
     chatTypes as chatType,
     activeChatsConstants
-} from "../../constants/ActionTypes";
+} from "../../constants/index";
 
 import { List, Map } from "immutable";
 

@@ -1,7 +1,7 @@
 import React from 'react'
-import GoToLink from "./GoToLink";
+import GoToLink from "./goToLink";
 
-class HomeHeader extends React.Component {
+class SidePanelHeader extends React.Component {
     render() {
         return <div id="bottom-bar">
             <GoToLink link="agenda"/>
@@ -11,4 +11,4 @@ class HomeHeader extends React.Component {
     }
 }
 
-export default HomeHeader
+export default SidePanelHeader

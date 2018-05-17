@@ -1,4 +1,4 @@
-import { loginConstants } from "../../constants/ActionTypes";
+import { loginConstants } from "../../constants/index";
 
 let user = JSON.parse(localStorage.getItem('user'));
 const initialState = user ? { loggedIn: true, user } : {};
@@ -11,14 +11,12 @@ export default function authentication(state = initialState, action) {
                 user: action.user
             };
         case loginConstants.LOGIN_OK:
-            console.log("LOGIN_OK");
             sessionStorage.setItem('user', JSON.stringify(action.user));
             return {
                 loggedIn: true,
                 user: action.user
             };
         case loginConstants.LOGIN_ERROR:
-            console.log("LOGIN_ERROR");
             return {};
         case loginConstants.LOGOUT:
             sessionStorage.clear();

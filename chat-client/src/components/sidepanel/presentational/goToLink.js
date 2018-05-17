@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 class GoToLink extends React.Component {
     render() {
@@ -19,11 +19,13 @@ class GoToLink extends React.Component {
 function getIcon(link) {
     switch (link) {
         case "agenda":
-            return "users"
+            return "users";
         case "chats":
-            return "comments"
+            return "comments";
         case "newGroup":
             return "user-plus"
+        default:
+            return "users";
     }
 }
 

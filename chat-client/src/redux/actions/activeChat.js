@@ -1,4 +1,4 @@
-import { activeChatsConstants } from "../../constants/ActionTypes";
+import { activeChatsConstants } from "../../constants/index";
 
 export const addActiveChat = (chatType, id) => ({
     type: activeChatsConstants.ADD_ACTIVE_CHAT,

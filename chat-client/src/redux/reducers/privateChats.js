@@ -3,7 +3,7 @@ import {
     loginConstants,
     activeChatsConstants,
     chatTypes as chatType
-} from "../../constants/ActionTypes";
+} from "../../constants/index";
 
 import {List, Map} from "immutable";
 

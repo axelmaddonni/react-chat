@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ActiveChat from "../presentational/activeChat";
-import SidePanel from "./sidePanel";
+import ActiveChat from "../../chats/presentational/activeChat";
+import SidePanel from "../../sidepanel/presentational/sidePanel";
 
 class HomePage extends Component {
     render() {

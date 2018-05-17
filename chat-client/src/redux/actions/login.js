@@ -1,4 +1,4 @@
-import { loginConstants } from '../../constants/ActionTypes';
+import { loginConstants } from '../../constants/index';
 
 export const login = (user) => ({
     type: loginConstants.LOGIN_REQUEST,

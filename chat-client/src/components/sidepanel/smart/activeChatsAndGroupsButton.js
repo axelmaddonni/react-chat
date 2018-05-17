@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
-import {deleteActiveChat, updateActiveChat} from "../redux/actions/activeChat";
-import {chatTypes, publicChatName} from "../constants/ActionTypes";
-import '../index.css';
+import { deleteActiveChat, updateActiveChat } from "../../../redux/actions/activeChat";
+import { chatTypes, publicChatName } from "../../../constants/index";
 
 class ActiveChatsAndGroupsButton extends React.Component {
 
@@ -12,7 +11,7 @@ class ActiveChatsAndGroupsButton extends React.Component {
             e.stopPropagation();
             this.props.closeChat(this.props.info);
         }}/>
-    )
+    );
 
     render() {
         return <li className="contact"
@@ -33,10 +32,6 @@ class ActiveChatsAndGroupsButton extends React.Component {
 function getChatName(activeChatInfo, userList, groupList) {
     let type = activeChatInfo.chatType;
     let id = activeChatInfo.id;
-
-    console.log("getChatName");
-    console.log(groupList.toJS());
-    console.log(activeChatInfo);
 
     if ( type === chatTypes.PRIVATE) {
         return id;
@@ -76,7 +71,7 @@ function getPreview(activeChatInfo, privateChats, groupChats, publicChats) {
 
 ActiveChatsAndGroupsButton.propTypes = {
     info: PropTypes.shape({chatType: PropTypes.string.isRequired, id: PropTypes.string}).isRequired
-}
+};
 
 function mapStateToProps(state) {
     const { userList, groupList, privateChats, groupChats, publicChats } = state;

@@ -1,4 +1,4 @@
-import {activeChatsConstants, chatTypes} from "../../constants/ActionTypes";
+import {activeChatsConstants, chatTypes} from "../../constants/index";
 import { List } from "immutable";
 
 const initialState = [{chatType: chatTypes.PUBLIC, id: undefined}];

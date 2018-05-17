@@ -1,4 +1,4 @@
-import { userConstants } from "../../constants/ActionTypes";
+import { userConstants } from "../../constants/index";
 
 export const addUser = (nick, age, city) => ({
     type: userConstants.ADD_USER,

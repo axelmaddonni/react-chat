@@ -1,4 +1,4 @@
-import { messageConstants, loginConstants} from "../../constants/ActionTypes";
+import { messageConstants, loginConstants} from "../../constants/index";
 
 import { List } from "immutable";
 

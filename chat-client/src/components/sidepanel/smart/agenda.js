@@ -1,7 +1,6 @@
 import React from 'react'
-import {UserInfo} from './userInfo'
+import { UserInfo } from './userInfo'
 import { connect } from 'react-redux';
-import '../index.css';
 
 class Agenda extends React.Component {
 

@@ -1,5 +1,5 @@
 import { takeEvery } from 'redux-saga/effects'
-import * as constants from '../../constants/ActionTypes'
+import * as constants from '../../constants/index'
 
 const handleNewMessage = function* handleNewMessage(socket) {
 
@@ -18,6 +18,6 @@ const handleNewMessage = function* handleNewMessage(socket) {
         delete params.type;
         socket.emit(action.type, params);
     }
-}
+};
 
 export default handleNewMessage

@@ -1,9 +1,8 @@
 import React from 'react'
 import NewMember from './newMember'
 import { connect } from 'react-redux';
-import '../index.css';
-import { createGroup } from "../redux/actions/group";
-import {history} from "../helpers";
+import { createGroup } from "../../../redux/actions/group";
+import { history } from "../../../helpers";
 
 class NewGroup extends React.Component {
 
@@ -90,7 +89,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(createGroup(groupName, members));
         history.push('/chats');
     }
-})
+});
 
 const connectedNewGroup = connect(mapStateToProps, mapDispatchToProps)(NewGroup);
 export { connectedNewGroup as NewGroup };

@@ -1,4 +1,4 @@
-import { groupConstants } from "../../constants/ActionTypes";
+import { groupConstants } from "../../constants/index";
 
 export const createGroup = (groupName, members) => ({
     type: groupConstants.CREATE_GROUP,

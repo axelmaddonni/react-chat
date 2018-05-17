@@ -19,11 +19,6 @@ var userSockets = new Map(); // maps nick to socket id
 
 const PUBLIC_ROOM = 'all';
 
-function printState() {
-    console.log(users);
-    console.log(groups);
-}
-
 io.sockets.on('connection', function (socket) {
 
     // User Events
@@ -31,11 +26,8 @@ io.sockets.on('connection', function (socket) {
         const user = params.user;
         const username = user.nick;
 
-        console.log("Login Request from " + username);
-
         if (users.has(username)) {
             socket.emit("LOGIN_ERROR", "Invalid nick");
-            console.log("ERROR: " + username);
 
         } else {
             socket.username = username;
@@ -48,16 +40,12 @@ io.sockets.on('connection', function (socket) {
             socket.to(PUBLIC_ROOM).emit("ADD_USER", user);
             console.log("JOINED: " + username);
         }
-
-        printState();
     });
 
     socket.on("LOGOUT", () => logout(socket));
     socket.on('disconnect', () => logout(socket));
 
     function logout(socket) {
-        console.log("Logout Request from " + socket.username);
-
         if (users.has(socket.username)) {
             users.delete(socket.username);
             userSockets.delete(socket.username);
@@ -69,10 +57,10 @@ io.sockets.on('connection', function (socket) {
             var socketIdIndex = roomKeys.indexOf(socket.id);
             var rooms = roomKeys.splice( socketIdIndex, 1 );
             rooms.forEach((room) => socket.leave(room));
-        }
 
-        printState();
-    };
+            console.log("EXITED: " + socket.username);
+        }
+    }
 
     // Message events
     socket.on("SEND_PUBLIC_MESSAGE", (params) => {

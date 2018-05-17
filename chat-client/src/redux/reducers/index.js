@@ -19,6 +19,6 @@ const reducers = combineReducers({
     groupChats,
     authentication,
     alert
-})
+});
 
 export default reducers

@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import '../index.css';
 import { connect } from 'react-redux';
-import {chatTypes as chatType} from "../constants/ActionTypes";
-import {addActiveChat, updateActiveChat} from "../redux/actions/activeChat";
-import {history} from "../helpers";
+import { chatTypes } from "../../../constants/index";
+import { addActiveChat, updateActiveChat } from "../../../redux/actions/activeChat";
+import { history } from "../../../helpers";
 
 class UserInfo extends React.Component {
     render() {
@@ -26,19 +25,19 @@ UserInfo.propTypes = {
     nick: PropTypes.string.isRequired,
     age: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired
-}
+};
 
 const mapDispatchToProps = dispatch => ({
     dispatchUpdateActiveChat: (nick) => {
-        dispatch(addActiveChat(chatType.PRIVATE, nick));
-        dispatch(updateActiveChat(chatType.PRIVATE, nick));
+        dispatch(addActiveChat(chatTypes.PRIVATE, nick));
+        dispatch(updateActiveChat(chatTypes.PRIVATE, nick));
         history.push('/chats');
     }
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
     return {};
-}
+};
 
 const connected = connect(mapStateToProps, mapDispatchToProps)(UserInfo);
 export { connected as UserInfo };

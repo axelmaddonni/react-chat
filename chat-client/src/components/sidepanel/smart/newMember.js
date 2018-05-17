@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import '../index.css';
-
 
 class NewMember extends React.Component {
 
@@ -24,6 +22,6 @@ NewMember.propTypes = {
     nick: PropTypes.string.isRequired,
     toggleSelected: PropTypes.func.isRequired,
     selected: PropTypes.bool.isRequired
-}
+};
 
 export default NewMember

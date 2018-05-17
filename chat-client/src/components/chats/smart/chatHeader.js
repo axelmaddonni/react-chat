@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {chatTypes, publicChatName} from "../constants/ActionTypes";
-import '../index.css';
+import { chatTypes, publicChatName } from "../../../constants/index";
 
 class ChatHeader extends React.Component {
     render() {

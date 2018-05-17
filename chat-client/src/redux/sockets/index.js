@@ -1,20 +1,20 @@
 import io from "socket.io-client"
+import { history } from "../../helpers";
+
+import { userActions, alertActions, loginActions, messageActions, groupActions, activeChatActions  } from "../actions";
 
 import {
-    loginConstants,
-    userConstants,
-    groupConstants,
-    messageConstants,
-    chatTypes as chatType
-} from "../../constants/ActionTypes";
-import { userActions, alertActions, loginActions, messageActions, groupActions, activeChatActions  } from "../actions";
-import {history} from "../../helpers";
+loginConstants,
+userConstants,
+groupConstants,
+messageConstants,
+chatTypes
+} from "../../constants";
 
 const setupSocket = (dispatch) => {
-    const socket = io.connect("http://localhost:3000");
+    const socket = io.connect("localhost:3000");
 
     socket.on(loginConstants.LOGIN_OK, (user) => {
-        console.log("SOCKETS LOGIN OK");
         dispatch(alertActions.clear());
         dispatch(loginActions.loginOk(user));
         history.push('/');
@@ -35,17 +35,14 @@ const setupSocket = (dispatch) => {
 
     socket.on(groupConstants.ADD_GROUP, (groupId, name, members) => {
         dispatch(groupActions.addGroup(groupId, name, members));
-        dispatch(activeChatActions.addActiveChat(chatType.GROUP, groupId));
+        dispatch(activeChatActions.addActiveChat(chatTypes.GROUP, groupId));
     });
 
     socket.on(groupConstants.DELETE_MEMBER_GROUP, (groupId, nick) => dispatch(groupActions.deleteMemberGroup(groupId, nick)));
 
     socket.on(messageConstants.RECEIVE_PRIVATE,
         (author, data) => {
-            console.log("RECEIVING PRIVATE");
-            console.log(author);
-            console.log(data);
-            dispatch(activeChatActions.addActiveChat(chatType.PRIVATE, author));
+            dispatch(activeChatActions.addActiveChat(chatTypes.PRIVATE, author));
             dispatch(messageActions.receivePrivateMessage(author, data))
         });
 
@@ -54,7 +51,7 @@ const setupSocket = (dispatch) => {
 
     socket.on(messageConstants.RECEIVE_GROUP,
         (groupId, author, data) => {
-            dispatch(activeChatActions.addActiveChat(chatType.GROUP, groupId));
+            dispatch(activeChatActions.addActiveChat(chatTypes.GROUP, groupId));
             dispatch(messageActions.receiveGroupMessage(groupId, author, data))
         });
 

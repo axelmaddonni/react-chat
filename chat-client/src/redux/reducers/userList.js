@@ -1,11 +1,11 @@
-import { userConstants, loginConstants} from "../../constants/ActionTypes";
+import { userConstants, loginConstants} from "../../constants/index";
 
 const { Map } = require('immutable');
 
 const initialState = Map({});
 
 const userList = (state = initialState, action) => {
-    const info = {age: action.age, city: action.city}
+    const info = {age: action.age, city: action.city};
     switch (action.type) {
         case userConstants.ADD_USER:
             return Map(state.set(action.nick, info));

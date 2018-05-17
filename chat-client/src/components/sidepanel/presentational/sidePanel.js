@@ -1,20 +1,18 @@
 import React from 'react'
-import { Router, Switch, Route } from 'react-router-dom'
-
-import HomeHeader from '../presentational/homeHeader'
+import { Switch, Route } from 'react-router-dom'
+import SidePanelHeader from '../presentational/sidePanelHeader'
 import { ActiveChatsAndGroups } from "../smart/activeChatsAndGroups";
 import { Agenda } from "../smart/agenda";
 import { NewGroup } from "../smart/newGroup";
 
-import '../index.css';
-import Profile from "./profile";
+import Profile from "../presentational/profile";
 
 class SidePanel extends React.Component {
 
     render() {
         return (
             <div id="sidepanel">
-                <HomeHeader/>
+                <SidePanelHeader/>
                 <Profile/>
                 <Switch>
                     <Route path='/chats' component={ActiveChatsAndGroups}/>

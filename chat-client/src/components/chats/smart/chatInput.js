@@ -1,7 +1,7 @@
-import { connect } from 'react-redux'
-import { sendPublicMessage, sendPrivateMessage, sendGroupMessage } from '../redux/actions/message'
 import React from 'react'
-import {chatTypes} from "../constants/ActionTypes";
+import { connect } from 'react-redux'
+import { chatTypes } from "../../../constants/index";
+import { sendPublicMessage, sendPrivateMessage, sendGroupMessage } from '../../../redux/actions/message'
 
 class ChatInput extends React.Component {
     constructor(props) {
@@ -87,7 +87,7 @@ const mapDispatchToProps = dispatch => ({
     dispatchSendGroupMessage: (groupId, author, data) => {
         dispatch(sendGroupMessage(groupId, author, data))
     }
-})
+});
 
 const connectedChatInput = connect(mapStateToProps, mapDispatchToProps)(ChatInput);
 export { connectedChatInput as ChatInput };
