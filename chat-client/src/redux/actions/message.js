@@ -1,14 +1,5 @@
 import { messageConstants } from "../../constants/ActionTypes";
 
-// export const sendPublicMessageWithType = (author, data, messageType) => ({
-//     function (dispatch) {
-//         // if(messageType === "Image"){
-//         //     data = uploadService.uploadImg(data);
-//         // }
-//         return dispatch(sendPublicMessage(author, data, messageType));
-//     }
-// });
-
 export const sendPublicMessage = (author, data) => ({
     type: messageConstants.SEND_PUBLIC,
     author,

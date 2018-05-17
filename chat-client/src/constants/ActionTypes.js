@@ -47,9 +47,3 @@ export const chatTypes = {
 };
 
 export const publicChatName = "Public";
-
-// export const messageType = {
-//     IMAGE: 'IMAGE',
-//     TEXT: 'TEXT',
-//     AUDIO: 'AUDIO'
-// };

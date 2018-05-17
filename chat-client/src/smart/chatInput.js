@@ -22,16 +22,6 @@ class ChatInput extends React.Component {
         this.setState({value: ''});
     }
 
-    // handleAttachment(props){
-    //     props.click();
-    // }
-
-    // fileChangeHandle = (event) => {
-    //     var reader = new FileReader();
-    //     // console.log("FILE");
-    //     // console.log(reader.readAsBinaryString(event.target.files[0]));
-    // }
-
     render() {
         let input;
         return <div className="message-input">

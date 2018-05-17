@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import GoToLink from "./GoToLink";
 
 class HomeHeader extends React.Component {

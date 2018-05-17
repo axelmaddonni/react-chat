@@ -12,17 +12,11 @@ class NewGroup extends React.Component {
         let map = new Map();
         this.props.userList.keySeq().forEach(k => map.set(k, false));
         this.state = {members: map, groupName: ""};
-        console.log("stattttteeeeeeee: ");
-        console.log(this.state);
         this.handleClick = this.toggleSelected.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
     }
 
     toggleSelected(member) {
-        console.log("State: ");
-        console.log(this.state);
-        console.log(this.props);
         let value = !(this.state.members.get(member));
         this.setState({members: this.state.members.set(member, value)})
     }
