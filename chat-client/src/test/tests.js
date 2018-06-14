@@ -11,5 +11,5 @@ describe("test", function () {
         driver.navigate().to('http://localhost:3000/');
         assert.strictEqual(1,1);
     })
-})
+});
 
