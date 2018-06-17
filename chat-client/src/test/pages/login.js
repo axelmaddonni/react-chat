@@ -4,14 +4,13 @@ const until = webdriver.until;
 
 module.exports = function(driver){
     const element = {
-        nameinput: By.name('nick'),
+        nameinput: By.name("nick"),
         ageinput: By.name('age'),
         cityinput: By.name('city'),
         loginButton: By.name('Login-button')
     };
     return{
         url: 'http://localhost:3000/',
-        elements: element,
 
         waitUntilVisible: function() {
             driver.wait(until.elementLocated(element.ageinput));
@@ -28,13 +27,12 @@ module.exports = function(driver){
             driver.findElement(element.nameinput).sendKeys(name);
             driver.findElement(element.ageinput).sendKeys(age);
             driver.findElement(element.cityinput).sendKeys(city);
-
+            driver.wait(until.elementTextIs(driver.findElement(element.nameinput), name));
             return driver.findElement(element.loginButton).click();
         },
 
         getUserInfo: function () {
-            return JSON.parse(sessionStorage.getItem('user'));
-
+            // return JSON.parse(sessionStorage.getItem('user'));
         }
     }
 

@@ -2,6 +2,9 @@ const webdriver = require("selenium-webdriver");
 const assert = require("assert");
 
 describe("login test", function () {
+    // e2e tests are too slow for default Mocha timeout
+    this.timeout(5000);
+
     const user = {
         name: "Manu",
         age: "23",
@@ -12,11 +15,11 @@ describe("login test", function () {
         .build();
     const loginpage = require('../pages/login')(driver);
 
-    before( () => loginpage.navigate());
+    before(() => loginpage.navigate());
 
-    it("loginTest", function () {
+    it("loginTest", async() => {
 
-        loginpage.enterInfo(user.name, user.age, user.city);
+        await loginpage.enterInfo(user.name, user.age, user.city);
         const loggedUser = loginpage.getUserInfo();
         assert(user.name, loggedUser.name);
         assert(user.age, loggedUser.age);
@@ -25,6 +28,9 @@ describe("login test", function () {
         // ask the browser to open a page
         // driver.navigate().to('http://localhost:3000/');
         // assert.strictEqual(1,1);
-    })
-});
+    });
 
+    after(function (done) {
+        driver.quit().then(() => done());
+    });
+});
