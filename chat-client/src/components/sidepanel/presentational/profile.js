@@ -7,9 +7,9 @@ class Profile extends React.Component {
             <div className="wrap">
                 <img id="profile-img" src={"https://api.adorable.io/avatars/285/" + user.nick + ".png"} className="online" alt=""/>
                 <div>
-                    <span className="profile-name"> { user.nick } </span>
-                    <span className="profile-info"> <i className="fa fa-calendar" aria-hidden="true"></i>  { user.age } </span>
-                    <span className="profile-info"> <i className="fa fa-building" aria-hidden="true"></i> { user.city } </span>
+                    <span id="userName" className="profile-name"> { user.nick } </span>
+                    <span id="userAge" className="profile-info"> <i className="fa fa-calendar" aria-hidden="true"></i>  { user.age } </span>
+                    <span id="userCity" className="profile-info"> <i className="fa fa-building" aria-hidden="true"></i> { user.city } </span>
                 </div>
             </div>
         </div>

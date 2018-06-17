@@ -7,7 +7,10 @@ module.exports = function(driver){
         nameinput: By.name("nick"),
         ageinput: By.name('age'),
         cityinput: By.name('city'),
-        loginButton: By.name('Login-button')
+        loginButton: By.name('Login-button'),
+        userName: By.id('userName'),
+        userAge: By.id('userAge'),
+        userCity: By.id('userCity')
     };
     return{
         url: 'http://localhost:3000/',
@@ -31,8 +34,16 @@ module.exports = function(driver){
             return driver.findElement(element.loginButton).click();
         },
 
-        getUserInfo: function () {
-            // return JSON.parse(sessionStorage.getItem('user'));
+        getUserName: function () {
+            return driver.findElement(element.userName).getText();
+        },
+
+        getUserAge: function () {
+            return driver.findElement(element.userAge).getText();
+        },
+
+        getUserCity: function () {
+            return driver.findElement(element.userCity).getText();
         }
     }
 

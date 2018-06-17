@@ -20,14 +20,14 @@ describe("login test", function () {
     it("loginTest", async() => {
 
         await loginpage.enterInfo(user.name, user.age, user.city);
-        const loggedUser = loginpage.getUserInfo();
-        assert(user.name, loggedUser.name);
-        assert(user.age, loggedUser.age);
-        assert(user.city, loggedUser.city);
+        const loggedUserName = await loginpage.getUserName();
+        const loggedUserAge = await loginpage.getUserAge();
+        const loggedUserCity = await loginpage.getUserCity();
 
-        // ask the browser to open a page
-        // driver.navigate().to('http://localhost:3000/');
-        // assert.strictEqual(1,1);
+        assert.strictEqual(loggedUserName,user.name);
+        assert.strictEqual(loggedUserAge,user.age);
+        assert.strictEqual(loggedUserCity,user.city);
+
     });
 
     after(function (done) {
