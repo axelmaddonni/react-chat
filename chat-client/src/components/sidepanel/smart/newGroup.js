@@ -36,13 +36,13 @@ class NewGroup extends React.Component {
         return ( <div>
                 <div id="search">
                     <label htmlFor=""><i className="fa fa-pencil" aria-hidden="true"></i></label>
-                    <input type="text" placeholder="Insert group name..." onChange={this.handleChange} value={this.state.groupName}
+                    <input id= "groupName-input" type="text" placeholder="Insert group name..." onChange={this.handleChange} value={this.state.groupName}
                            ref={(node) => {
                                input = node
                            }}/>
                 </div>
                 <div id="contacts">
-                    <ul id="lista">
+                    <ul id="listaContactos">
                         {keys.map((key) => (<NewMember
                             key={key}
                             nick={key}

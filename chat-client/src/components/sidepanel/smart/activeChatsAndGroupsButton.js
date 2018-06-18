@@ -14,12 +14,13 @@ class ActiveChatsAndGroupsButton extends React.Component {
     );
 
     render() {
+        var aux = getChatName(this.props.info, this.props.userList, this.props.groupList);
         return <li className="contact"
                    onClick={() => this.props.dispatchUpdateActiveChat(this.props.info.chatType, this.props.info.id)}>
             <div className="wrap">
                 <img src={"https://api.adorable.io/avatars/285/" + getChatName(this.props.info, this.props.userList, this.props.groupList) + ".png"} alt=""/>
                 <div className="meta">
-                    <p className="chatName">{getChatName(this.props.info, this.props.userList, this.props.groupList)}
+                    <p id = {aux} className="chatName">{getChatName(this.props.info, this.props.userList, this.props.groupList)}
                         { this.props.info.chatType !== chatTypes.PUBLIC ? this.getCloseIcon() : '' }
                     </p>
                     <p className="preview">{getPreview(this.props.info, this.props.privateChats, this.props.groupChats, this.props.publicChats)}</p>
