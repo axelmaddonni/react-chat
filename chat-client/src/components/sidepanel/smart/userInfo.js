@@ -9,7 +9,7 @@ class UserInfo extends React.Component {
     render() {
         return (
             <li className="contact" onClick={() => this.props.dispatchUpdateActiveChat(this.props.nick)}>
-                <div className="wrap">
+                <div className="wrap" data-nick={this.props.nick}>
                     <img src={"https://api.adorable.io/avatars/285/" + this.props.nick + ".png"} alt=""/>
                     <div className="meta">
                         <p className="name">{this.props.nick}</p>

@@ -6,7 +6,7 @@ class ChatHeader extends React.Component {
     render() {
         return <div className="contact-profile">
             <img src={"https://api.adorable.io/avatars/285/" + getChatName(this.props.activeChatInfo, this.props.userList, this.props.groupList) + ".png"} alt=""/>
-            <p>{getChatName(this.props.activeChatInfo, this.props.userList, this.props.groupList, true)}</p>
+            <p id="chat-header">{getChatName(this.props.activeChatInfo, this.props.userList, this.props.groupList, true)}</p>
         </div>
     }
 }

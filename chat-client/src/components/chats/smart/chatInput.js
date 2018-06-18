@@ -26,7 +26,7 @@ class ChatInput extends React.Component {
         let input;
         return <div className="message-input">
             <div className="wrap">
-                <input
+                <input id="message-input"
                     onKeyPress={(e) => {
                         if (e.key === 'Enter') {
                             this.handleSubmit();
