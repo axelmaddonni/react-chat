@@ -4,20 +4,40 @@ const Key = webdriver.Key;
 const until = webdriver.until;
 
 module.exports = function(driver){
-    const element = {
+    const selectors = {
         userName: By.id('userName'),
         userAge: By.id('userAge'),
         userCity: By.id('userCity')
     };
 
-    return{
+    async function checkLastMessage(selector, name, message) {
+        const webElements = await driver.findElements(selector);
+        if (webElements.length < 1) {
+            return false;
+        }
+        const lastMessage = webElements[webElements.length - 1];
+        return lastMessage.getAttribute("data-message-nick") === name && lastMessage.getAttribute("data-message") === message;
+    }
+
+    return {
         url: 'http://localhost:3000/',
 
+        waitForProfileIsVisible: function() {
+            driver.wait(until.elementLocated(selectors.userName));
+            driver.wait(until.elementLocated(selectors.userName));
+            return driver.wait(until.elementLocated(selectors.userName))
+        },
 
+        getUserName: function () {
+            return driver.findElement(selectors.userName).getText();
+        },
 
-        navigate: function () {
-            driver.navigate().to(this.url);
-            return this.waitUntilVisible();
+        getUserAge: function () {
+            return driver.findElement(selectors.userAge).getText();
+        },
+
+        getUserCity: function () {
+            return driver.findElement(selectors.userCity).getText();
         },
 
         openChat: function (name) {
@@ -33,21 +53,37 @@ module.exports = function(driver){
             return driver.findElement(By.id("chat-header")).getText();;
         },
 
-        checkLastSentMessage: function(name, message) {
-            //chequea si el ultimo mensaje que se muestra es el que se pasa por parametro
+        checkLastSentMessage: async function (name, message) {
+            return await checkLastMessage(By.className('sent'), name, message)
+        },
 
-            let webElements = driver.findElements(By.name('sent'));
+        checkLastReceivedMessage: async function (name, message) {
+            return await checkLastMessage(By.className('received'), name, message)
+        },
 
-            //TODO revisar
-            //TODO debería agregarle un id al mensaje y hacer getText()?? (y no agregarle un atributo con datos)
+        clickOnNewGroup: function () {
+            return driver.findElement(By.id("newGroup")).click();
+        },
 
-            let lastMessage = webElements.get(webElements.length - 1);
+        clickOnChats: function () {
+            return driver.findElement(By.id("chats")).click();
+        },
 
-            return lastMessage.getAttribute("data-message-nick") == name && lastMessage.getAttribute("data-message") == message;
+        setGroupName: function (groupName) {
+            driver.findElement(By.id("groupName-input")).sendKeys(groupName);
+            return driver.findElement(By.id("groupName-input")).sendKeys(Key.RETURN);
+        },
 
-            //webElements.then(function (elements) {
-             //   return elements.length != 0;
-            //});
+        selectGroupMember: function (nick) {
+            return driver.findElement(By.css('[data-nick="'+ nick +'"]')).click();
+        },
+
+        createGroup: function () {
+            return driver.findElement(By.id("addNewGroup")).click();
+        },
+
+        openGroup: function (groupName) {
+            return driver.findElement(By.css('[data-group-id="'+ groupName +'"]')).click();
         }
     }
 

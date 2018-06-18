@@ -6,10 +6,10 @@ class NewMember extends React.Component {
     render() {
         return (
             <li className={("contact ").concat(this.props.selected ? "selected" : "")} onClick={() => this.props.toggleSelected(this.props.nick)}>
-                <div className="wrap">
+                <div className="wrap" data-nick={this.props.nick}>
                     <img src={"https://api.adorable.io/avatars/285/" + this.props.nick + ".png"} alt=""/>
                     <div className="meta">
-                        <p id= "newMemberName" className="name">{this.props.nick}</p>
+                        <p className="name">{this.props.nick}</p>
                         <p className="preview">Age: {this.props.age} City: {this.props.city}</p>
                     </div>
                 </div>

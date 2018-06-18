@@ -20,38 +20,33 @@ describe("messages test", function () {
     const message = "Hola";
 
     var driver;
+    var loginPage;
     var chatsPage;
     var tabsSwitcher;
-    var loginpage;
-
-    driver = new webdriver.Builder()
-        .forBrowser('chrome')
-        .build();
 
     beforeEach(async () => {
         driver = new webdriver.Builder()
             .forBrowser('chrome')
             .build();
 
+        loginPage = require('../test/pages/login')(driver);
         tabsSwitcher = require('../test/utils/tabsSwitcher')(driver);
-        chatsPage = require('./pages/chats')(driver);
-        loginpage = require('../test/pages/login')(driver);
+        chatsPage = require('../test/pages/chats')(driver);
 
-        loginpage.navigate();
+        loginPage.navigate();
         await tabsSwitcher.init();
     });
 
-    it("messagesTest", async() => {
-        await loginpage.login(user.name, user.age, user.city);
-
+    it("Open private chat and send message", async() => {
+        // Logueo la primera persona
         var user1Tab = await tabsSwitcher.getTabIdentifier();
-        var user2Tab = await tabsSwitcher.openNewTab();
-
-        await tabsSwitcher.switchTab(user2Tab);
+        await loginPage.login(user.name, user.age, user.city);
 
         // Logueo la segunda persona
-        await loginpage.navigate();
-        await loginpage.login(receiver.name, receiver.age, receiver.city);
+        var user2Tab = await tabsSwitcher.openNewTab();
+        await tabsSwitcher.switchTab(user2Tab);
+        await loginPage.navigate();
+        await loginPage.login(receiver.name, receiver.age, receiver.city);
 
         // El user1 va a enviar un mensaje al otro user
         await tabsSwitcher.switchTab(user1Tab);
@@ -63,6 +58,7 @@ describe("messages test", function () {
 
         await tabsSwitcher.switchTab(user2Tab);
         await chatsPage.openChat(user.name);
+
         assert(user.name, await chatsPage.getChatHeader());
         assert(true, await chatsPage.checkLastReceivedMessage(user.name, message));
     });

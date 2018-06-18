@@ -18,7 +18,8 @@ describe("login test", function () {
     };
 
     var driver;
-    var loginpage;
+    var loginPage;
+    var chatsPage;
     var tabsSwitcher;
 
     beforeEach(async () => {
@@ -26,37 +27,41 @@ describe("login test", function () {
             .forBrowser('chrome')
             .build();
 
-        loginpage = require('../pages/login')(driver);
-        tabsSwitcher = require('../utils/tabsSwitcher')(driver);
+        loginPage = require('./pages/login')(driver);
+        chatsPage = require('./pages/chats')(driver);
+        tabsSwitcher = require('./utils/tabsSwitcher')(driver);
 
-        loginpage.navigate();
+        loginPage.navigate();
         await tabsSwitcher.init();
     });
 
-    it("oneLoginTest", async() => {
-        await loginpage.login(user.name, user.age, user.city);
-        const loggedUserName = await loginpage.getUserName();
-        const loggedUserAge = await loginpage.getUserAge();
-        const loggedUserCity = await loginpage.getUserCity();
+    it("Log user", async() => {
+        await loginPage.login(user.name, user.age, user.city);
+        await chatsPage.waitForProfileIsVisible();
+        const loggedUserName = await chatsPage.getUserName();
+        const loggedUserAge = await chatsPage.getUserAge();
+        const loggedUserCity = await chatsPage.getUserCity();
 
         assert.strictEqual(loggedUserName,user.name);
         assert.strictEqual(loggedUserAge,user.age);
         assert.strictEqual(loggedUserCity,user.city);
     });
 
-    it("multipleLoginTest", async() => {
-        await loginpage.login(user.name, user.age, user.city);
+    it("Log multiple users and switch tabs", async() => {
+        await loginPage.login(user.name, user.age, user.city);
+        await chatsPage.waitForProfileIsVisible();
 
         var mainTabId = await tabsSwitcher.getTabIdentifier();
         var newTabId = await tabsSwitcher.openNewTab();
         await tabsSwitcher.switchTab(newTabId);
 
-        await loginpage.navigate();
-        await loginpage.login(user2.name, user2.age, user2.city);
+        await loginPage.navigate();
+        await loginPage.login(user2.name, user2.age, user2.city);
+        await chatsPage.waitForProfileIsVisible();
+        assert.strictEqual(await chatsPage.getUserName(), user2.name);
 
         await tabsSwitcher.switchTab(mainTabId);
-        await tabsSwitcher.switchTab(newTabId);
-        await tabsSwitcher.switchTab(mainTabId);
+        assert.strictEqual(await chatsPage.getUserName(), user.name);
     });
 
     afterEach(function (done) {

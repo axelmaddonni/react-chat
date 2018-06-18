@@ -23,18 +23,16 @@ describe("group test", function () {
     var driver;
     var loginpage;
     var tabsSwitcher;
-    var groupPage;
+    var chatsPage;
 
     beforeEach(async () => {
         driver = new webdriver.Builder()
             .forBrowser('chrome')
             .build();
 
-        tabsSwitcher = require('../test/utils/tabsSwitcher')(driver);
-        groupPage = require('../test/pages/groupChat')(driver);
         loginpage = require('../test/pages/login')(driver);
-
-
+        chatsPage = require('../test/pages/chats')(driver);
+        tabsSwitcher = require('../test/utils/tabsSwitcher')(driver);
 
         loginpage.navigate();
         await tabsSwitcher.init();
@@ -43,38 +41,33 @@ describe("group test", function () {
     it("Create group and send message", async() => {
         // Logueo la primer persona
         await loginpage.login(user1.name, user1.age, user1.city);
-
+        await chatsPage.waitForProfileIsVisible();
 
         var user1Tab = await tabsSwitcher.getTabIdentifier();
         var user2Tab = await tabsSwitcher.openNewTab();
-
         await tabsSwitcher.switchTab(user2Tab);
 
         // Logueo la segunda persona
         await loginpage.navigate();
         await loginpage.login(user2.name, user2.age, user2.city);
+        await chatsPage.waitForProfileIsVisible();
 
         // El user1 va a crear el nuevo grupo
         await tabsSwitcher.switchTab(user1Tab);
-        await groupPage.clickOnNewGroup();
-        await groupPage.setGroupName(groupName);
-        //var contacts = await groupPage.getContactsList();
-        await groupPage.selectGroupMember();
-        await groupPage.createGroup();
-        await groupPage.openGroup(groupName);
+        await chatsPage.clickOnNewGroup();
+        await chatsPage.setGroupName(groupName);
 
-        await groupPage.sendMessage(message);
-        var sentMessages = await groupPage.getSentMessages();
-        console.log("sentMessages");
-        console.log(sentMessages);
-        console.log(sentMessages.size());
-        assert(true, await groupPage.checkLastSentMessage(user1.name, message));
+        await chatsPage.selectGroupMember(user2.name);
+        await chatsPage.createGroup();
+        await chatsPage.openGroup(groupName);
+
+        await chatsPage.sendMessage(message);
+        assert(true, await chatsPage.checkLastSentMessage(user1.name, message));
 
         await tabsSwitcher.switchTab(user2Tab);
-        await groupPage.clickOnChats();
-        await groupPage.openGroup(groupName);
-        assert(true, await groupPage.checkLastSentMessage(user1.name, message));
-
+        await chatsPage.clickOnChats();
+        await chatsPage.openGroup(groupName);
+        assert(true, await chatsPage.checkLastSentMessage(user1.name, message));
     });
 
     afterEach(function (done) {
