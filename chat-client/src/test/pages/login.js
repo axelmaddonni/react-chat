@@ -13,7 +13,7 @@ module.exports = function(driver){
         userCity: By.id('userCity')
     };
     return{
-        url: 'http://localhost:3000/',
+        url: 'http://localhost:3000/login',
 
         waitUntilVisible: function() {
             driver.wait(until.elementLocated(element.ageinput));

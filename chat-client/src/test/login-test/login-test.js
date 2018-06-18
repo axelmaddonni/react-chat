@@ -10,15 +10,30 @@ describe("login test", function () {
         age: "23",
         city: "BsAs"
     };
-    const driver = new webdriver.Builder()
-        .forBrowser('chrome')
-        .build();
-    const loginpage = require('../pages/login')(driver);
 
-    before(() => loginpage.navigate());
+    const user2 = {
+        name: "Axel",
+        age: "23",
+        city: "BsAs"
+    };
 
-    it("loginTest", async() => {
+    var driver;
+    var loginpage;
+    var tabsSwitcher;
 
+    beforeEach(async () => {
+        driver = new webdriver.Builder()
+            .forBrowser('chrome')
+            .build();
+
+        loginpage = require('../pages/login')(driver);
+        tabsSwitcher = require('../utils/tabsSwitcher')(driver);
+
+        loginpage.navigate();
+        await tabsSwitcher.init();
+    });
+
+    it("oneLoginTest", async() => {
         await loginpage.enterInfo(user.name, user.age, user.city);
         const loggedUserName = await loginpage.getUserName();
         const loggedUserAge = await loginpage.getUserAge();
@@ -27,10 +42,24 @@ describe("login test", function () {
         assert.strictEqual(loggedUserName,user.name);
         assert.strictEqual(loggedUserAge,user.age);
         assert.strictEqual(loggedUserCity,user.city);
-
     });
 
-    after(function (done) {
+    it("multipleLoginTest", async() => {
+        await loginpage.enterInfo(user.name, user.age, user.city);
+
+        var mainTabId = await tabsSwitcher.getTabIdentifier();
+        var newTabId = await tabsSwitcher.openNewTab();
+        await tabsSwitcher.switchTab(newTabId);
+
+        await loginpage.navigate();
+        await loginpage.enterInfo(user2.name, user2.age, user2.city);
+
+        await tabsSwitcher.switchTab(mainTabId);
+        await tabsSwitcher.switchTab(newTabId);
+        await tabsSwitcher.switchTab(mainTabId);
+    });
+
+    afterEach(function (done) {
         driver.quit().then(() => done());
     });
 });
