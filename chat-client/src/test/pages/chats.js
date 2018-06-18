@@ -4,16 +4,16 @@ const Key = webdriver.Key;
 const until = webdriver.until;
 
 module.exports = function(driver){
+    const element = {
+        userName: By.id('userName'),
+        userAge: By.id('userAge'),
+        userCity: By.id('userCity')
+    };
 
     return{
         url: 'http://localhost:3000/',
 
-        waitUntilVisible: function() {
-            //TODO esperar a que se vea mi perfil
-            driver.wait(until.elementLocated(element.ageinput));
-            driver.wait(until.elementLocated(element.cityinput));
-            return driver.wait(until.elementLocated(element.nameinput));
-        },
+
 
         navigate: function () {
             driver.navigate().to(this.url);

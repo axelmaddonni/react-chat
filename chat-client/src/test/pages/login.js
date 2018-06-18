@@ -26,12 +26,13 @@ module.exports = function(driver){
             return this.waitUntilVisible();
         },
 
-        enterInfo: function (name, age, city) {
+        login: function (name, age, city) {
             driver.findElement(element.nameinput).sendKeys(name);
             driver.findElement(element.ageinput).sendKeys(age);
             driver.findElement(element.cityinput).sendKeys(city);
             driver.wait(until.elementTextIs(driver.findElement(element.nameinput), name));
-            return driver.findElement(element.loginButton).click();
+            driver.findElement(element.loginButton).click();
+            return require('../pages/chats')(driver);
         },
 
         getUserName: function () {

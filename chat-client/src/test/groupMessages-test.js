@@ -42,7 +42,7 @@ describe("group test", function () {
 
     it("Create group and send message", async() => {
         // Logueo la primer persona
-        await loginpage.enterInfo(user1.name, user1.age, user1.city);
+        await loginpage.login(user1.name, user1.age, user1.city);
 
 
         var user1Tab = await tabsSwitcher.getTabIdentifier();
@@ -52,7 +52,7 @@ describe("group test", function () {
 
         // Logueo la segunda persona
         await loginpage.navigate();
-        await loginpage.enterInfo(user2.name, user2.age, user2.city);
+        await loginpage.login(user2.name, user2.age, user2.city);
 
         // El user1 va a crear el nuevo grupo
         await tabsSwitcher.switchTab(user1Tab);

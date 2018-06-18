@@ -55,7 +55,7 @@ module.exports = function(driver){
         },
 
         getSentMessages: function () {
-            messages =  driver.findElements(By.className("sent"));
+            return messages =  driver.findElements(By.className("sent"));
         },
 
 

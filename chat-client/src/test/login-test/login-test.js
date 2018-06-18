@@ -3,7 +3,7 @@ const assert = require("assert");
 
 describe("login test", function () {
     // e2e tests are too slow for default Mocha timeout
-    this.timeout(5000);
+    this.timeout(10000);
 
     const user = {
         name: "Manu",
@@ -34,7 +34,7 @@ describe("login test", function () {
     });
 
     it("oneLoginTest", async() => {
-        await loginpage.enterInfo(user.name, user.age, user.city);
+        await loginpage.login(user.name, user.age, user.city);
         const loggedUserName = await loginpage.getUserName();
         const loggedUserAge = await loginpage.getUserAge();
         const loggedUserCity = await loginpage.getUserCity();
@@ -45,14 +45,14 @@ describe("login test", function () {
     });
 
     it("multipleLoginTest", async() => {
-        await loginpage.enterInfo(user.name, user.age, user.city);
+        await loginpage.login(user.name, user.age, user.city);
 
         var mainTabId = await tabsSwitcher.getTabIdentifier();
         var newTabId = await tabsSwitcher.openNewTab();
         await tabsSwitcher.switchTab(newTabId);
 
         await loginpage.navigate();
-        await loginpage.enterInfo(user2.name, user2.age, user2.city);
+        await loginpage.login(user2.name, user2.age, user2.city);
 
         await tabsSwitcher.switchTab(mainTabId);
         await tabsSwitcher.switchTab(newTabId);
