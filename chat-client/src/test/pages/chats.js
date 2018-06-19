@@ -16,74 +16,76 @@ module.exports = function(driver){
             return false;
         }
         const lastMessage = webElements[webElements.length - 1];
-        return lastMessage.getAttribute("data-message-nick") === name && lastMessage.getAttribute("data-message") === message;
+        const messageNick = await lastMessage.getAttribute("data-message-nick");
+        const messageData = await lastMessage.getAttribute("data-message");
+        return  messageNick === name &&  messageData === message;
     }
 
     return {
         url: 'http://localhost:3000/',
 
-        waitForProfileIsVisible: function() {
-            driver.wait(until.elementLocated(selectors.userName), 10000);
-            driver.wait(until.elementLocated(selectors.userAge), 10000);
-            return driver.wait(until.elementLocated(selectors.userCity), 10000);
+        waitForProfileIsVisible: async function() {
+            await driver.wait(until.elementLocated(selectors.userName), 10000);
+            await driver.wait(until.elementLocated(selectors.userAge), 10000);
+            await driver.wait(until.elementLocated(selectors.userCity), 10000);
         },
 
-        getUserName: function () {
-            return driver.findElement(selectors.userName).getText();
+        getUserName: async function() {
+            return await driver.findElement(selectors.userName).getText();
         },
 
-        getUserAge: function () {
-            return driver.findElement(selectors.userAge).getText();
+        getUserAge: async function () {
+            return await driver.findElement(selectors.userAge).getText();
         },
 
-        getUserCity: function () {
-            return driver.findElement(selectors.userCity).getText();
+        getUserCity: async function() {
+            return await driver.findElement(selectors.userCity).getText();
         },
 
-        openChat: function (name) {
-            return driver.findElement(By.css('[data-nick="'+ name +'"]')).click();
+        openChat: async function(name) {
+            await driver.findElement(By.css('[data-nick="' + name + '"]')).click();
         },
 
-        sendMessage: function (message) {
-            driver.findElement(By.id("message-input")).sendKeys(message);
-            return driver.findElement(By.id("message-input")).sendKeys(Key.RETURN);
+        sendMessage: async function(message) {
+            await driver.findElement(By.id("message-input")).sendKeys(message);
+            await driver.findElement(By.id("message-input")).sendKeys(Key.RETURN);
         },
 
-        getChatHeader: function () {
-            return driver.findElement(By.id("chat-header")).getText();;
+        getChatHeader: async function() {
+            return await driver.findElement(By.id("chat-header")).getText();
         },
 
-        checkLastSentMessage: async function (name, message) {
+        checkLastSentMessage: async function(name, message) {
             return await checkLastMessage(By.className('sent'), name, message)
         },
 
-        checkLastReceivedMessage: async function (name, message) {
-            return await checkLastMessage(By.className('received'), name, message)
+        checkLastReceivedMessage: async function(name, message) {
+            return await checkLastMessage(By.className('replies'), name, message)
         },
 
-        clickOnNewGroup: function () {
-            return driver.findElement(By.id("newGroup")).click();
+        clickOnNewGroup: async function() {
+            await driver.findElement(By.id("newGroup")).click();
         },
 
-        clickOnChats: function () {
-            return driver.findElement(By.id("chats")).click();
+        clickOnChats: async function() {
+            await driver.findElement(By.id("chats")).click();
         },
 
-        setGroupName: function (groupName) {
-            driver.findElement(By.id("groupName-input")).sendKeys(groupName);
-            return driver.findElement(By.id("groupName-input")).sendKeys(Key.RETURN);
+        setGroupName: async function(groupName) {
+            await driver.findElement(By.id("groupName-input")).sendKeys(groupName);
+            await driver.findElement(By.id("groupName-input")).sendKeys(Key.RETURN);
         },
 
-        selectGroupMember: function (nick) {
-            return driver.findElement(By.css('[data-nick="'+ nick +'"]')).click();
+        selectGroupMember: async function(nick) {
+            await driver.findElement(By.css('[data-nick="' + nick + '"]')).click();
         },
 
-        createGroup: function () {
-            return driver.findElement(By.id("addNewGroup")).click();
+        createGroup: async function() {
+            await driver.findElement(By.id("addNewGroup")).click();
         },
 
-        openGroup: function (groupName) {
-            return driver.findElement(By.css('[data-group-id="'+ groupName +'"]')).click();
+        openGroup: async function(groupName) {
+            await driver.findElement(By.css('[data-group-id="' + groupName + '"]')).click();
         }
     }
 

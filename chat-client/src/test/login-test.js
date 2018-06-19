@@ -1,6 +1,6 @@
 const webdriver = require("selenium-webdriver");
-const assert = require("assert");
-var uncaught = require('uncaught');
+const uncaught = require('uncaught');
+const expect = require('chai').expect
 
 describe("login test", function () {
     // e2e tests are too slow for default Mocha timeout
@@ -31,7 +31,7 @@ describe("login test", function () {
     });
 
     beforeEach(async () => {
-        driver = new webdriver.Builder()
+         driver = await new webdriver.Builder()
             .forBrowser('chrome')
             .build();
         await driver.manage().setTimeouts({ implicit: 10000 });
@@ -51,9 +51,9 @@ describe("login test", function () {
         const loggedUserAge = await chatsPage.getUserAge();
         const loggedUserCity = await chatsPage.getUserCity();
 
-        assert.strictEqual(loggedUserName,user.name);
-        assert.strictEqual(loggedUserAge,user.age);
-        assert.strictEqual(loggedUserCity,user.city);
+        expect(loggedUserName).to.equal(user.name);
+        expect(loggedUserAge).to.equal(user.age);
+        expect(loggedUserCity).to.equal(user.city);
     });
 
     it("Log multiple users and switch tabs", async() => {
@@ -67,10 +67,10 @@ describe("login test", function () {
         await loginPage.navigate();
         await loginPage.login(user2.name, user2.age, user2.city);
         await chatsPage.waitForProfileIsVisible();
-        assert.strictEqual(await chatsPage.getUserName(), user2.name);
+        expect(await chatsPage.getUserName()).to.equal(user2.name);
 
         await tabsSwitcher.switchTab(mainTabId);
-        assert.strictEqual(await chatsPage.getUserName(), user.name);
+        expect(await chatsPage.getUserName()).to.equal(user.name);
     });
 
     afterEach(function (done) {

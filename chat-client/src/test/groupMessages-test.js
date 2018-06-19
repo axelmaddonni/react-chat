@@ -26,7 +26,7 @@ describe("group test", function () {
     var chatsPage;
 
     beforeEach(async () => {
-        driver = new webdriver.Builder()
+        driver = await new webdriver.Builder()
             .forBrowser('chrome')
             .build();
 
@@ -34,7 +34,7 @@ describe("group test", function () {
         chatsPage = require('../test/pages/chats')(driver);
         tabsSwitcher = require('../test/utils/tabsSwitcher')(driver);
 
-        loginpage.navigate();
+        await loginpage.navigate();
         await tabsSwitcher.init();
     });
 
@@ -62,12 +62,14 @@ describe("group test", function () {
         await chatsPage.openGroup(groupName);
 
         await chatsPage.sendMessage(message);
-        assert(true, await chatsPage.checkLastSentMessage(user1.name, message));
+        var checkSentMessage = await chatsPage.checkLastSentMessage(user1.name, message);
+        assert(checkSentMessage, true);
 
         await tabsSwitcher.switchTab(user2Tab);
         await chatsPage.clickOnChats();
         await chatsPage.openGroup(groupName);
-        assert(true, await chatsPage.checkLastSentMessage(user1.name, message));
+        checkSentMessage = await chatsPage.checkLastReceivedMessage(user1.name, message);
+        assert(checkSentMessage, true);
     });
 
     afterEach(function (done) {

@@ -12,23 +12,22 @@ module.exports = function(driver){
     return {
         url: 'http://localhost:3000/login',
 
-        waitUntilVisible: function() {
-            driver.wait(until.elementLocated(selectors.ageinput));
-            driver.wait(until.elementLocated(selectors.cityinput));
-            return driver.wait(until.elementLocated(selectors.nameinput));
+        waitUntilVisible: async function () {
+            await driver.wait(until.elementLocated(selectors.ageinput));
+            await driver.wait(until.elementLocated(selectors.cityinput));
+            await driver.wait(until.elementLocated(selectors.nameinput));
         },
 
-        navigate: function () {
-            driver.navigate().to(this.url);
-            return this.waitUntilVisible();
+        navigate: async function () {
+            await driver.navigate().to(this.url);
+            await this.waitUntilVisible();
         },
 
-        login: function (name, age, city) {
-            driver.findElement(selectors.nameinput).sendKeys(name);
-            driver.findElement(selectors.ageinput).sendKeys(age);
-            driver.findElement(selectors.cityinput).sendKeys(city);
-            driver.wait(until.elementTextIs(driver.findElement(selectors.nameinput), name));
-            return driver.findElement(selectors.loginButton).click();
+        login: async function (name, age, city) {
+            await driver.findElement(selectors.nameinput).sendKeys(name);
+            await driver.findElement(selectors.ageinput).sendKeys(age);
+            await driver.findElement(selectors.cityinput).sendKeys(city);
+            await driver.findElement(selectors.loginButton).click();
         }
     }
 

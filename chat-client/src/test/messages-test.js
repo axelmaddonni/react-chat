@@ -1,5 +1,6 @@
 const webdriver = require("selenium-webdriver");
 const assert = require("assert");
+const uncaught = require('uncaught');
 
 describe("messages test", function () {
     // e2e tests are too slow for default Mocha timeout
@@ -25,7 +26,7 @@ describe("messages test", function () {
     var tabsSwitcher;
 
     beforeEach(async () => {
-        driver = new webdriver.Builder()
+        driver = await new webdriver.Builder()
             .forBrowser('chrome')
             .build();
 
@@ -33,7 +34,7 @@ describe("messages test", function () {
         tabsSwitcher = require('../test/utils/tabsSwitcher')(driver);
         chatsPage = require('../test/pages/chats')(driver);
 
-        loginPage.navigate();
+        await loginPage.navigate();
         await tabsSwitcher.init();
     });
 
@@ -53,14 +54,20 @@ describe("messages test", function () {
         await chatsPage.openChat(receiver.name);
         await chatsPage.sendMessage(message);
 
-        assert(receiver.name, await chatsPage.getChatHeader());
-        assert(true, await chatsPage.checkLastSentMessage(user.name, message));
+        var chatHeader = await chatsPage.getChatHeader();
+        assert(chatHeader, receiver.name);
+
+        var checkReceivedMessage = await chatsPage.checkLastSentMessage(user.name, message);
+        assert(checkReceivedMessage, true);
 
         await tabsSwitcher.switchTab(user2Tab);
         await chatsPage.openChat(user.name);
 
-        assert(user.name, await chatsPage.getChatHeader());
-        assert(true, await chatsPage.checkLastReceivedMessage(user.name, message));
+        chatHeader = await chatsPage.getChatHeader();
+        assert(chatHeader, user.name);
+
+        checkReceivedMessage = await chatsPage.checkLastReceivedMessage(user.name, message);
+        assert(checkReceivedMessage, true);
     });
 
     after(function (done) {
