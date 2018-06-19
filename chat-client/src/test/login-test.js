@@ -1,5 +1,6 @@
 const webdriver = require("selenium-webdriver");
 const assert = require("assert");
+var uncaught = require('uncaught');
 
 describe("login test", function () {
     // e2e tests are too slow for default Mocha timeout
@@ -22,16 +23,24 @@ describe("login test", function () {
     var chatsPage;
     var tabsSwitcher;
 
+    before(function () {
+        uncaught.start();
+        uncaught.addListener(function (error) {
+            console.log('Uncaught error or rejection: ', error.message);
+        });
+    });
+
     beforeEach(async () => {
         driver = new webdriver.Builder()
             .forBrowser('chrome')
             .build();
+        await driver.manage().setTimeouts({ implicit: 10000 });
 
         loginPage = require('./pages/login')(driver);
         chatsPage = require('./pages/chats')(driver);
         tabsSwitcher = require('./utils/tabsSwitcher')(driver);
 
-        loginPage.navigate();
+        await loginPage.navigate();
         await tabsSwitcher.init();
     });
 

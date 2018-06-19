@@ -23,9 +23,9 @@ module.exports = function(driver){
         url: 'http://localhost:3000/',
 
         waitForProfileIsVisible: function() {
-            driver.wait(until.elementLocated(selectors.userName));
-            driver.wait(until.elementLocated(selectors.userName));
-            return driver.wait(until.elementLocated(selectors.userName))
+            driver.wait(until.elementLocated(selectors.userName), 10000);
+            driver.wait(until.elementLocated(selectors.userAge), 10000);
+            return driver.wait(until.elementLocated(selectors.userCity), 10000);
         },
 
         getUserName: function () {
